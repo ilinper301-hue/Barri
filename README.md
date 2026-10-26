@@ -5,7 +5,7 @@ App web educativa para niños de 6 a 12 años: resolver problemas con el **model
 **Abrir la app:** https://ilinper301-hue.github.io/barri/
 
 ## Qué incluye
-- **6 mundos:** Suma y resta, Comparación, Fracciones, Multiplicar y dividir, Retos (varios pasos) y Extremo. 330 problemas en 4 niveles, del modelo casi hecho a dibujar las barras desde cero.
+- **7 mundos:** Suma y resta, Comparación, Fracciones, Multiplicar y dividir, Retos (varios pasos), Avanzado (5.º y 6.º: antes y después, fracción del resto, razones y porcentajes) y Extremo. 354 problemas en 4 niveles, del modelo casi hecho a dibujar las barras desde cero.
 - **Método Singapur:** fase con objetos antes de las barras, elegir el modelo, barras proporcionales, «1 parte = …» en fracciones, estimar antes de calcular y responder con frase completa.
 - **Apoyos por alumno:** lectura en voz alta con resaltado (para quien empieza a leer), colores para daltonismo y dificultad que se adapta.
 - **Para el aula:** perfiles de alumnos, Modo Docente (todo abierto, sin guardar), modo proyector con «problema del día», informe de errores típicos, competencias y resumen para las familias. La Zona del tutor tiene PIN.
