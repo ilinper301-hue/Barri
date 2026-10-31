@@ -1,5 +1,5 @@
 // Barri: funciona sin conexión. Red primero (así los cambios llegan solos) y copia guardada si no hay red.
-const V="barri-pwa-33",CORE=["./","index.html","manifest.webmanifest","icon-192.png","icon-512.png","fonts/fredoka.woff","fonts/fredoka-ext.woff","fonts/nunito.woff","fonts/inter-400.woff","fonts/inter-500.woff","fonts/inter-600.woff"],FONTS=["fonts.googleapis.com","fonts.gstatic.com"];
+const V="barri-pwa-34",CORE=["./","index.html","manifest.webmanifest","icon-192.png","icon-512.png","fonts/fredoka.woff","fonts/fredoka-ext.woff","fonts/nunito.woff","fonts/inter-400.woff","fonts/inter-500.woff","fonts/inter-600.woff"],FONTS=["fonts.googleapis.com","fonts.gstatic.com"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.all(CORE.map(u=>c.add(u).catch(()=>{})))).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x.startsWith("barri-pwa-")&&x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",e=>{const r=e.request;if(r.method!=="GET")return;const u=new URL(r.url);
