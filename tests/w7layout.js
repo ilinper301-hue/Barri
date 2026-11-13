@@ -1,0 +1,5 @@
+const {chromium}=require("playwright");(async()=>{const b=await chromium.launch();let bad=0;
+for(const w of [340,360,390,412,768,1180]){const ctx=await b.newContext({viewport:{width:w,height:w>700?820:780},hasTouch:true,isMobile:w<700});const p=await ctx.newPage();await p.goto(process.env.APP_URL+"?nosplash");await p.waitForTimeout(400);
+ const r=await p.evaluate(()=>{const out=[];for(const q of DATA.problems.filter(x=>x.w===7))for(const mode of ["edit","lock"]){S.on=false;startGame([q]);S.step=1;S.mc=false;S.fill={};if(mode==="lock"){q.rows.forEach((rw,ri)=>{rw.s.forEach((s,si)=>S.fill[ri+"."+si]=String(typeof s==="object"?s.v:s))});S.step=2}render();
+  const rows=[...document.querySelectorAll(".mr")].map(m=>[...m.querySelectorAll(".slot")].map(e=>Math.round(e.getBoundingClientRect().top)));if(rows.some(t=>t.length&&Math.max(...t)-Math.min(...t)>3)||document.documentElement.scrollWidth>innerWidth)out.push(q.id+" "+mode)}return out});
+ if(r.length){bad+=r.length;console.log("FALLO",w,r.join(", "))}await ctx.close()}console.log(bad?"w7layout.js: "+bad+" fallos":"w7layout.js: todo OK");await b.close()})();

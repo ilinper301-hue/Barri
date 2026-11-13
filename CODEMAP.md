@@ -1,0 +1,186 @@
+# CODEMAP (generado por tools/map.py; no editar a mano)
+
+Usa `sed -n 'INICIO,FINp' archivo` o `grep -n` para leer solo lo necesario. Líneas muy largas: usa `cut -c1-200`.
+
+
+## src/js/game.js
+
+- L3: `P`
+- L4: `col`
+- L5: `sv`
+- L6: `S`
+- L7: `reset`
+- L9: `bot`
+- L10: `star`
+- L11: `slotList`
+- L12: `slot`
+- L14: `fmodel`
+- L15: `cells`
+- L16: `reg`
+- L17: `h`
+- L20: `dmodel`
+- L23: `tbw`
+- L25: `model`
+- L26: `wd`
+- L27: `tv`
+- L31: `chips`
+- L32: `two`
+- L33: `wrap2`
+- L35: `render`
+- L37: `pr`
+- L38: `tx`
+- L39: `h`
+- L49: `bn`
+- L50: `lab`
+- L51: `place`
+- L52: `say`
+- L53: `chkF`
+- L56: `chkD`
+- L66: `chkM`
+- L71: `chkO`
+- L74: `chkA`
+- L82: `dr`
+- L83: `slotTap`
+- L84: `dropAt`
+- L88: `rz`
+- L89: `c`
+- L98: `endPtr`
+- L99: `x`
+- L106: `prefill`
+- L109: `startGame`
+- L111: `recover`
+
+## src/js/app.js
+
+- L2: `XLSX_B64`
+- L3: `ORIG`
+- L5: `KEY`
+- L7: `theme`
+- L8: `save`
+- L10: `STU`
+- L12: `FAM`
+- L13: `roster`
+- L14: `asStu`
+- L15: `enterMd`
+- L16: `swStu`
+- L17: `addStu`
+- L18: `delStu`
+- L19: `XMSG`
+- L21: `WN`
+- L22: `EX`
+- L23: `pool`
+- L24: `open`
+- L25: `pl`
+- L26: `day`
+- L27: `streak`
+- L28: `nextLv`
+- L29: `logo`
+- L30: `ACC`
+- L31: `mas`
+- L34: `IC`
+- L35: `wc`
+- L36: `BD`
+- L37: `TC`
+- L38: `tiers`
+- L39: `bdg`
+- L41: `IO`
+- L42: `ic`
+- L43: `bar`
+- L44: `ih`
+- L45: `lc`
+- L46: `dots`
+- L47: `sc`
+- L48: `bubs`
+- L49: `minsToday`
+- L50: `wk`
+- L51: `review`
+- L52: `dl`
+- L53: `esc`
+- L54: `whoSel`
+- L55: `lvTxt`
+- L56: `ago`
+- L57: `pc`
+- L58: `comp`
+- L59: `hardW`
+- L60: `compSec`
+- L61: `noteSec`
+- L62: `TIP`
+- L63: `famTxt`
+- L68: `famSec`
+- L69: `privSec`
+- L70: `aula`
+- L71: `gr`
+- L75: `BKMSG`
+- L76: `bkSet`
+- L77: `bkDue`
+- L78: `bkBanner`
+- L79: `cleanLog`
+- L80: `cleanStu`
+- L81: `cleanAll`
+- L84: `shareBk`
+- L86: `dlb`
+- L88: `famFilter`
+- L89: `rolSec`
+- L90: `bkState`
+- L91: `NM`
+- L92: `scr`
+- L93: `TB`
+- L94: `p` (pantalla/pestaña dentro de SC o TB)
+- L106: `a` (pantalla/pestaña dentro de SC o TB)
+- L107: `c` (pantalla/pestaña dentro de SC o TB)
+- L110: `s` (pantalla/pestaña dentro de SC o TB)
+- L112: `LT`
+- L113: `initLesson`
+- L118: `all`
+- L121: `SC`
+- L122: `home` (pantalla/pestaña dentro de SC o TB)
+- L123: `learn` (pantalla/pestaña dentro de SC o TB)
+- L124: `les` (pantalla/pestaña dentro de SC o TB)
+- L126: `adv` (pantalla/pestaña dentro de SC o TB)
+- L127: `album` (pantalla/pestaña dentro de SC o TB)
+- L128: `nb` (pantalla/pestaña dentro de SC o TB)
+- L129: `gate` (pantalla/pestaña dentro de SC o TB)
+- L130: `tutor` (pantalla/pestaña dentro de SC o TB)
+- L131: `show`
+- L132: `go`
+- L133: `startList`
+- L134: `play`
+- L135: `Game`
+- L136: `exit` (pantalla/pestaña dentro de SC o TB)
+- L137: `upd`
+- L176: `b64blob`
+- L177: `xdl`
+- L178: `unzip`
+- L180: `ds`
+- L182: `readXlsx`
+- L183: `ss`
+- L184: `path`
+- L187: `rows`
+- L188: `mkProb`
+- L189: `mm`
+- L191: `nm`
+- L198: `nums`
+- L200: `dd`
+- L202: `importX`
+- L205: `s`
+- L208: `splash`
+- L209: `k`
+- L212: `end`
+- L215: `mAbs`
+- L216: `readMan`
+- L217: `diag`
+- L226: `runDiag`
+
+## src/css/styles.css (secciones)
+
+- L108: /* ===== Tema oscuro (directrices) ===== */
+- L118: /* ===== Zona del tutor: estética de la otra app ===== */
+- L148: /* ===== Inicio v2 (pantalla de inicio) ===== */
+- L173: /* ===== Animación de bienvenida ===== */
+- L191: /* ===== Perfiles, aula y competencias ===== */
+- L201: /* ===== Tablet y pantallas horizontales ===== */
+- L222: /* ===== Diseño unificado Lectori · Barri (acento morado, tarjetas planas) ===== */
+
+## Bloques grandes que NO hay que abrir
+- `data/banco_problemas.xlsx` (banco; se edita con Excel). `src/js/data.generated.js` (referencia; lo regenera build.py). `{{XLSX_B64}}` en app.js se inyecta al compilar.
+

@@ -25,4 +25,10 @@ App web educativa para niños de 6 a 12 años: resolver problemas con el **model
 Desde la app: **Zona del tutor → Ajustes → Banco de problemas → Descargar Excel**. Edita enunciados, números y pistas y vuelve a importarlo. Cada fila necesita su ID (`M1-N1-01`…): el mundo y el tipo de problema salen del ID.
 
 ## Desarrollo
-El código fuente vive en un proyecto aparte (`src/` + `tools/build.py` + tests). Aquí solo se publica el resultado compilado. GitHub Pages sirve la rama `main` desde la raíz.
+El código fuente está en este mismo repositorio: `src/` (código), `data/` (banco de problemas en Excel), `tools/` (compilación) y `tests/` (pruebas). Los archivos de la raíz (`index.html`, `sw.js`…) son el resultado compilado y no se editan a mano.
+
+1. `python3 tools/build.py` compila `src/` y el Excel en `dist/`.
+2. `bash tests/run_all.sh` pasa las pruebas (necesita python3 con openpyxl, node y Playwright con Chromium).
+3. `python3 tools/publish.py` copia `dist/` a la raíz; GitHub Pages sirve la rama `main`.
+
+Documentación: `CONTEXT.md` (diseño y decisiones), `CODEMAP.md` (índice del código), `ESTADO.md` (trabajo en curso) y `PLAN-BARRI.md` (plan de mejoras).
