@@ -1,6 +1,6 @@
 # ECOSISTEMA · contrato común de las apps
 
-Versión del contrato: **1** (13-11-2026). Este archivo es **idéntico en los seis repositorios**
+Versión del contrato: **1** (13-11-2026; añadida la regla 0 el mismo día). Este archivo es **idéntico en los seis repositorios**
 (Lectori, Barri, Calculi, Fori, Tabula, Charta). La copia de referencia es la de `tabula`: si cambia,
 se copia tal cual a los demás en el mismo día.
 
@@ -24,6 +24,18 @@ se publican desde `tabula/firestore.rules`.
 
 ## 2. Reglas que no se rompen
 
+0. **Cada app funciona entera por separado.** Es la regla que manda sobre todas las demás.
+   - Una app nunca necesita a otra para abrirse, usarse ni guardar el progreso. Sin Tabula, sin cuenta
+     de Google y sin conexión, todo lo que la app hace hoy sigue funcionando igual.
+   - Las conexiones son un **añadido opcional**: si la otra app no está o no hay datos suyos, la
+     función sencillamente no aparece o dice «no hay datos», sin avisos de error ni pantallas a medias.
+   - **Las familias no ven el ecosistema.** En el perfil de Familias (y en cualquier uso sin modo
+     docente) no aparece ningún botón, texto ni aviso sobre Tabula u otras apps. Lo relacionado con el
+     ecosistema vive solo en la zona del tutor del perfil Docente.
+   - Los perfiles creados a mano, sin enlazar, son alumnos de pleno derecho: nada les falta ni se les
+     pide enlazarse.
+   - Cada fase se da por terminada solo si la app sigue pasando sus pruebas **sin** ningún dato de
+     otra app en el navegador (instalación limpia).
 1. **Cada app escribe solo en sus claves.** Las de otra app se leen, nunca se escriben ni se borran.
 2. **Tabula manda en el alumnado.** Los grupos y los alumnos se crean y se corrigen en Tabula; las
    demás apps los reciben (apartado 3). Una app puede tener además perfiles propios sin enlazar
