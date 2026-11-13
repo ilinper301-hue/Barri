@@ -12,3 +12,6 @@ Este repositorio contiene **el código fuente y la app publicada**. GitHub Pages
 
 No abras archivos enormes (`index.html`, `dist/index.html`, `src/js/data.generated.js`, el Excel entero).
 Reglas que no se rompen (mismo dominio que Lectori y las demás apps, privacidad, táctil, 44 px): `CONTEXT.md`, secciones 2, 7 y 10b.
+
+## Ecosistema
+Antes de tocar algo que una app lea o deje para otra (alumnado, resultados, enlaces entre apps), lee `ECOSISTEMA.md`: es el contrato común de las seis apps.
