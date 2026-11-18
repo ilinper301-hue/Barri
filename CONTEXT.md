@@ -257,3 +257,13 @@ El usuario no puede evitar escribir "Continúa" cuando te cortan. Hazlo barato:
 - Escalas en `:root`: radios `--r1..r4`, `--rp` (8/12/16/22/pill) y letra `--f1..f8` (12-24 px). Los rem y valores sueltos se dejan como estaban.
 - `!important`: de 45 a 7 líneas (solo @media print, movimiento reducido y `.card.tx` con el hueco del altavoz). Hay que añadir color/tamaño con las variables, no con valores nuevos.
 - Nunito se mantiene (fuente del cuerpo, 27 KB). `tools/shots.js <carpeta>` hace capturas en móvil/tableta × claro/oscuro para comparar antes/después.
+
+## 10u. v1.31 · Fase 4 de PLAN-BARRI: pantalla de juego (Opus)
+- **Bloquito fijo**: en móvil, `render()` pone `.bub` justo después del enunciado `.tx` en los 4 pasos (ya no queda bajo el teclado). En tableta (2 columnas) va siempre el último de `.gl` (abajo a la izquierda) con `position:sticky;bottom:8px`, así se ve aunque haya scroll.
+- **Tableta**: `wrap2()` mete los pasos (`.pills`) dentro de `.top` (una fila menos; rejilla `auto minmax(0,1fr)` con `data-cols="2"`). En Calcular y Comprobar la tarjeta del modelo lleva la clase `.mdl` y pasa a la columna izquierda (`.gl.wm`: enunciado, modelo, [pizarra], Bloquito); la derecha queda para operaciones, fichas, teclado y botones.
+- **Pizarra plegable**: cerrada por defecto; botón `.pzb` «Pizarra» en la barra superior (`pzBtn()`, `PDO` recuerda abierta/cerrada durante la sesión; punto naranja `.has` si hay dibujo guardado). Cerrarla no borra `S.pd`.
+- **Barras al ancho**: `wide(A)` (tras `pad()`, antes de `grow()`) mide cada fila sin saltos (`flex-wrap:nowrap` temporal) y multiplica solo los anchos de los bloques (`.bars>.slot` antes del `=`, celdas/regiones de fracciones) por un factor común: en tableta crece hasta ×3 o encoge si no cabe; en móvil solo encoge. El Total (`.tb`) se ajusta al ancho real de las partes. No actúa en Dibujar del nivel 4 (anchos de `S.dw`).
+- **Horizontal bajo** (`max-height:450px`, móvil apaisado): enunciado 16 px, sin el texto `.exh`, fichas 44 px con hueco 4, márgenes 16 px; teclado en 6 columnas desde `max-height:620px`. Medido con todos los problemas (pasos 1-3): a 844×390 de 1044/1062 pantallas con scroll (máx. 333 px) a ~20-50 (máx. 65 px, problemas de 3-4 líneas); Bloquito visible en todas. 960×540, 1024×768 y 1180×820 sin scroll.
+- Tests: `tests/v131.js` (barrido de todos los problemas en 4 tamaños) y `pad.js` adaptado. `tools/gshots.js <carpeta> [AxB …]` hace capturas y medidas del juego por paso.
+- Ojo: `fuzz.js` (solo con `--full`) a veces da «SIN CAMBIO: añadir bloque» en nivel 4; pasa igual en v1.30 (no es de esta fase).
+

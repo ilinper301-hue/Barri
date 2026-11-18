@@ -2,7 +2,7 @@
 const XLSX_B64="{{XLSX_B64}}";
 const ORIG=DATA.problems;
 // Barri: navegación, progreso, álbum y zona de adultos. El juego (4 pasos) vive en game.js
-const KEY="barri.v1",VER="1.30.0 · 18 nov 2026",DEF=()=>({name:"",stars:0,solved:{},log:[],days:[],acc:"casco",theme:"",set:{dur:15,voice:""},bank:null,bankFile:null,notes:"",ap:{},place:{},cur:"p1",profs:{},rol:"doc",pin:""});
+const KEY="barri.v1",VER="1.31.0 · 18 nov 2026",DEF=()=>({name:"",stars:0,solved:{},log:[],days:[],acc:"casco",theme:"",set:{dur:15,voice:""},bank:null,bankFile:null,notes:"",ap:{},place:{},cur:"p1",profs:{},rol:"doc",pin:""});
 let st;try{st=Object.assign(DEF(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){st=DEF()}
 const theme=()=>{if(st.theme)document.documentElement.dataset.theme=st.theme;else delete document.documentElement.dataset.theme;if(st.ap&&st.ap.cb)document.documentElement.dataset.cb="1";else delete document.documentElement.dataset.cb;tcol()};
 /* v1.27: las barras del sistema (estado y navegación) toman el color del fondo de la pantalla actual */

@@ -803,3 +803,38 @@ html:has(.tz){background:#F5F6FA}:root[data-theme="dark"]:has(.tz){background:#0
 :where(button,a,select,input,[role=button],[tabindex]):focus-visible{outline:3px solid #F59E0B;outline-offset:2px}
 :root[data-theme="dark"] :where(button,a,select,input,[role=button],[tabindex]):focus-visible{outline-color:#FBBF24}
 #app .tz .seg3 button{min-height:44px}
+/* ===== v1.31 · Fase 4 de PLAN-BARRI: pantalla de juego (Bloquito fijo, pizarra plegable, modelo a la izquierda al calcular) ===== */
+.pzb{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border:2px solid var(--bd);border-radius:var(--rp);background:var(--card);color:var(--tx);font:500 var(--f3) var(--fd);cursor:pointer;flex:none;position:relative}
+.pzb.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.pzb.has:not(.on)::after{content:"";position:absolute;top:5px;right:9px;width:9px;height:9px;border-radius:50%;background:var(--act)}
+@media (orientation:landscape) and (min-width:700px){
+.app.cmp[data-sc="game"] .gl>.bub{flex:none}
+.app.cmp[data-sc="game"] .gl.wm>.tx{flex:0 0 auto}
+.app.cmp[data-sc="game"] .gl>.mdl{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;padding:16px 20px}
+.app.cmp[data-sc="game"] .gl.wm>.spad{flex:1 1 0;min-height:120px}
+.app.cmp[data-sc="game"] .gl.wm:has(.spad)>.mdl{flex:0 0 auto}
+}
+@media (orientation:landscape) and (min-width:700px) and (max-height:620px){
+.app.cmp[data-sc="game"] .pad{grid-template-columns:repeat(6,1fr)}
+.app.cmp[data-sc="game"] .pad button{height:44px}
+.app.cmp[data-sc="game"] .gl>.mdl{padding:8px 14px}
+}
+@media (orientation:landscape) and (min-width:700px){.app.cmp[data-sc="game"] .gl:not(.wm):not(:has(.spad))>.tx{flex:1 1 auto;align-content:center}}
+@media (orientation:landscape) and (min-width:700px) and (max-height:450px){
+.app.cmp[data-sc="game"] .exh{display:none}
+.app.cmp[data-sc="game"] .tray{gap:6px}.app.cmp[data-sc="game"] .chip{min-width:44px;height:44px}
+.app.cmp[data-sc="game"] .exs .ex.ln{padding:2px 0}
+}
+/* v1.31: en tableta (2 columnas) los pasos van en la barra superior: una fila menos */
+@media (orientation:landscape) and (min-width:700px){.app.cmp[data-sc="game"] .top>.pills{flex:none;margin:0}.app.cmp[data-sc="game"] .top>.pg{min-width:40px}}
+@media (orientation:landscape) and (min-width:700px) and (max-height:450px){
+.app.cmp[data-sc="game"] .gl>.tx{font-size:var(--f4);line-height:1.4;padding:8px 14px}
+.app.cmp[data-sc="game"] .gl{gap:6px}.app.cmp[data-sc="game"] .gl>.mdl .mr{margin-bottom:4px}
+}
+@media (orientation:landscape) and (min-width:700px){.app.cmp[data-sc="game"] .gl>.bub{position:sticky;bottom:8px;z-index:3}}
+@media (orientation:landscape) and (min-width:700px) and (max-height:450px){
+.app[data-sc="game"]{padding-left:16px;padding-right:16px;column-gap:16px}
+.app.cmp[data-sc="game"] .tray{gap:4px}.app.cmp[data-sc="game"] .exs{gap:2px}
+}
+@media (orientation:landscape) and (min-width:700px){.app[data-sc="game"][data-cols="2"]{grid-template-rows:auto minmax(0,1fr)}}
+@media (orientation:landscape) and (min-width:700px) and (min-height:700px){.app.cmp[data-sc="game"] .gl:not(.wm):not(:has(.spad))>.tx{font-size:28px;line-height:1.5}}

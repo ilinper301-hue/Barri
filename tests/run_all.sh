@@ -30,13 +30,14 @@ run "copia con un toque, aviso e importación saneada" node backup.js
 run "perfil de uso Docente/Familias y modo docente" node roles.js
 run "v1.13: PIN, selector, borrado, fichas por fase, deshacer, operaciones en líneas, sonido" node v113.js
 run "v1.13: relleno vertical y zonas de soltar (5 tamaños)" node fill.js
-run "v1.13.1: pizarra bajo el enunciado (tablet)" node pad.js
+run "v1.13.1/v1.31: pizarra plegable bajo el enunciado (tablet)" node pad.js
 run "v1.14: modelo, 1 parte, estimar, frase, errores típicos, Mezcla, Retos, proyector" node v114.js
 run "v1.15: objetos, lectura en voz alta, daltonismo, fuentes, dificultad adaptativa" node v115.js
 run "v1.16: fases, mascota, letras, anchos, fracciones, tutor, Extremo" node v116.js
 run "v1.17: apoyo, evaluación, retos de pensar, datos sobrantes" node v117.js
 run "v1.18: cuenta docente (Firebase simulado)" node sync.js
 run "v1.29: controles de 44 px, aria-live y foco visible" node tap44.js
+run "v1.31: pantalla de juego (Bloquito fijo, pizarra plegable, barras al ancho, horizontal bajo)" node v131.js
 run "v1.28: que no se pierda nada (fusión, incremental, decisión, guardado)" node sync2.js
 run "v1.18.2: bienvenida con Google" node wel.js
 run "v1.19-1.20: Zona del tutor (Progreso · Alumno · Ajustes)" node v119.js

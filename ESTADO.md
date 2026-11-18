@@ -9,7 +9,7 @@ Tras cada paso: `python3 tools/ck.py "qué se hizo"` (1 línea). Al empezar una 
 (vacío)
 
 ## Estado de entrega
-- Versión publicada: **1.30.0** (caché barri-pwa-37). Desde el 13/11/2026 este repositorio contiene fuente + app publicada; flujo en `CLAUDE.md`, plan de mejoras por fases en `PLAN-BARRI.md` (fases 0-3 hechas; siguiente: fase 4 (Opus) o 5).
+- Versión publicada: **1.31.0** (caché barri-pwa-38). Desde el 13/11/2026 este repositorio contiene fuente + app publicada; flujo en `CLAUDE.md`, plan de mejoras por fases en `PLAN-BARRI.md` (fases 0-4 hechas; siguiente: fase 5 (Sonnet, decidir D2) o 6).
 - Pendiente de que el usuario pruebe: sincronización real con Firebase y piloto con alumnos.
 - Aviso: la sección «Relevo para Sonnet» de abajo es histórica (v1.13) y ya está hecha.
 
@@ -67,3 +67,5 @@ Reglas: trabaja en src/ y data/, compila `python3 tools/build.py`, prueba con `b
 - [18/11 01:47] F3: tokens semánticos y colores (CTA naranja, pasos/progreso morado, mundo 1 cian, barra teal); falta tests y capturas
 - [18/11 01:47] F3: variables de radio y letra (escala)
 - [18/11 01:50] F3: !important no necesarios quitados (28); falta tests, nunito, publicar
+- [18/11 12:54] 1-4: Bloquito bajo el enunciado (móvil) y abajo a la izquierda fijo y sticky (tableta); pizarra plegable (botón en barra superior, cerrada por defecto); pasos en la barra superior; modelo a la izquierda en Calcular/Comprobar; wide() ajusta barras al ancho; teclado 6 col y compacto en horizontal bajo; 844x390 de 1044/1062 con scroll a 51 (máx 65px); falta tests
+- [18/11 13:08] 5-6: tests/v131.js + pad.js adaptado; batería completa OK; v1.31.0 (barri-pwa-38); CONTEXT §10u, PLAN fase 4 hecha
