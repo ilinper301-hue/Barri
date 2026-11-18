@@ -267,3 +267,9 @@ El usuario no puede evitar escribir "Continúa" cuando te cortan. Hazlo barato:
 - Tests: `tests/v131.js` (barrido de todos los problemas en 4 tamaños) y `pad.js` adaptado. `tools/gshots.js <carpeta> [AxB …]` hace capturas y medidas del juego por paso.
 - Ojo: `fuzz.js` (solo con `--full`) a veces da «SIN CAMBIO: añadir bloque» en nivel 4; pasa igual en v1.30 (no es de esta fase).
 
+
+## 10v. v1.32 · Fase 5 de PLAN-BARRI: álbum y mapa (Sonnet)
+- Decisión D2 (tomada por Claude): lista para texto e información, tarjetas grandes y coloridas para lo que el niño toca (mundos, Aventuras).
+- Álbum: insignias en filas `.bdr` (icono, nombre, descripción, barra hacia el siguiente nivel, «v de n», bronce/plata/oro); estado vacío con invitación a resolver el primer problema.
+- Mapa: contador del mundo «0 de 140 resueltos» (igual que el nivel) y motivo del bloqueo en la tarjeta (`wlk()`): Retos y Avanzado.
+- Inicio no cambia (ya es una lista de acciones con Aventuras destacada).

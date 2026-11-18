@@ -53,8 +53,8 @@ Decisión D3 (tomada por Claude): **naranja = acción principal**, **verde = sol
 ### Fase 4 · Pantalla de juego — ✅ **hecha el 2026-11-18 (v1.31.0)**
 Bloquito justo bajo el enunciado en móvil y fijo abajo a la izquierda en tableta (siempre visible, también con scroll). Pasos dentro de la barra superior en tableta. Pizarra plegable: cerrada por defecto, botón «Pizarra» arriba, conserva el dibujo al cerrarla. Al calcular y comprobar, el modelo pasa a la columna izquierda y la derecha queda para las operaciones. Barras al ancho de la tarjeta (`wide()`): crecen en tableta y encogen en móvil si no caben (arregla «×n veces» que saltaba de línea). Móvil apaisado (844 × 390): de 1044 de 1062 pantallas con scroll (máx. 333 px) a unas 20-50 (máx. 65 px). `tests/v131.js` y `tools/gshots.js`. Detalle en CONTEXT.md §10u.
 
-### Fase 5 · Inicio, mapa y álbum en listas — *Sonnet, esfuerzo medio*
-Mismo lenguaje que Lectori y la Zona del tutor, con los colores de Barri. Contadores coherentes, motivo del bloqueo en cada mundo, estados vacíos con sentido. Antes hay que decidir D2.
+### Fase 5 · Inicio, mapa y álbum en listas — ✅ **hecha el 2026-11-18 (v1.32.0)**
+Álbum en lista con progreso, contadores «n de m resueltos» en mundo y nivel, motivo del bloqueo en Retos y Avanzado, estado vacío del álbum. Inicio sin cambios. Detalle en CONTEXT.md §10v.
 
 ### Fase 6 · Abrir rápido y diagnóstico — *Sonnet, esfuerzo medio*
 Sacar del `index.html` el Excel incrustado (y, si compensa, el banco) a archivos guardados por el service worker. Abrir desde la copia guardada y avisar cuando haya versión nueva. Quitar `Function()`. Panel «Diagnóstico» en Ajustes: versión, caché, espacio usado y últimos errores (útil al trabajar solo desde el móvil).
@@ -65,7 +65,7 @@ Sacar del `index.html` el Excel incrustado (y, si compensa, el banco) a archivos
 ## 3. Decisiones que te tocan
 
 - **D1.** ✅ Código fuente en el mismo repositorio público.
-- **D2.** ¿Inicio y mapa del alumno pasan a listas como Lectori, o el lado del niño conserva tarjetas grandes? (afecta a la fase 5)
+- **D2.** ✅ (decidida por Claude) Listas para información; tarjetas grandes para mundos y Aventuras.
 - **D3.** ✅ Acción principal naranja en toda la app (verde solo para acierto).
 
 ## 4. Cómo pedir cada fase
