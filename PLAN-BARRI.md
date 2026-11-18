@@ -45,7 +45,7 @@ El repositorio contiene ya `src/`, `tools/`, `tests/`, `data/` y la documentaci�
 Aviso visible si falla el guardado y medidor de espacio en Ajustes. Sustituir el `confirm()` por una pantalla propia, tras el PIN, con «Juntar» por defecto. Fusión por campos (historial por fecha, resueltos por máximo, notas y apoyos por su propia fecha). Sincronizar leyendo solo lo cambiado desde la última vez. Pruebas de cada caso.
 Hecho: aviso #sverr y medidor en Ajustes; pantalla «Datos en tu cuenta» tras el PIN (Juntar, unir por nombre, ids «p1» que chocan); fusión por campos con reinicio; lectura incremental por hora del servidor (en reposo, 1 lectura en vez de todos los alumnos); `tests/sync2.js`. Detalle en CONTEXT.md §10k. Riesgos 2-5 del diagnóstico resueltos.
 
-### Fase 2 · Dedos y lectores de pantalla — *Sonnet, esfuerzo medio*
+### Fase 2 · Dedos y lectores de pantalla — ✅ **hecha el 2026-11-18 (v1.29.0)**
 Todos los controles a 44 px o más (lista en B.1), `aria-live` en el mensaje de Bloquito, foco visible. Prueba automática que mida los tamaños en cada pantalla.
 
 ### Fase 3 · Un solo sistema de diseño — *Sonnet, esfuerzo alto*

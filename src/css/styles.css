@@ -789,3 +789,17 @@ body:has(.tz){background:#F5F6FA}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tz .lr.skp .ltt,:root:not([data-theme="light"]) .tz .lr.skp .li{color:var(--acx)}}
 html:has(.tz){background:#F5F6FA}:root[data-theme="dark"]:has(.tz){background:#0E1220}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]):has(.tz){background:#0E1220}}
+/* v1.29 · Fase 2: controles táctiles de 44 px como mínimo + foco visible */
+#app .ih .back{min-height:44px;min-width:44px}
+#app .ib,#app .app.cmp .ib,#app .app.cmp[data-sc="game"] .ib{width:44px;height:44px}
+#app .txr{width:44px;height:44px;top:4px;right:4px}
+#app .pills button.ok{border:11px solid transparent;border-width:11px 4px;background-clip:padding-box;margin:-11px -4px;min-height:44px}
+#app .tabs button,#app .tz .tabs button{min-height:44px}
+#app .tz .sb,#app .tz .bk .sb{min-height:44px}
+#app .bt2,#app .app.cmp .bt2,#app .app.cmp[data-sc="game"] .bt2{min-height:44px}
+#app .pdt button,#app .pdt .pc{height:44px!important;min-width:44px}
+#app .pm button,#app .stp button,#app .app.cmp .pm button,#app .app.cmp .stp button{min-width:44px;min-height:44px}
+#app .app.cmp .slot,#app .app.cmp .chip,#app .app.cmp .rz,#app .app.cmp .cell{min-height:44px}
+:where(button,a,select,input,[role=button],[tabindex]):focus-visible{outline:3px solid #F59E0B;outline-offset:2px}
+:root[data-theme="dark"] :where(button,a,select,input,[role=button],[tabindex]):focus-visible{outline-color:#FBBF24}
+#app .tz .seg3 button{min-height:44px}

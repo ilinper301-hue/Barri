@@ -246,3 +246,8 @@ El usuario no puede evitar escribir "Continúa" cuando te cortan. Hazlo barato:
 5. **El resumen final, corto, se escribe en cuanto lo esencial está entregado**; no lo dejes para tras comprobaciones opcionales.
 6. Orden de prioridad dentro de cada tarea: lo que el usuario pidió → verificación mínima → entrega → extras.
 7. Si la tarea es larga, dilo y propón partes (Parte 1/2/3) y entrega cada una completa.
+
+## 10s. v1.29 · Fase 2 de PLAN-BARRI: dedos y lectores de pantalla (Sonnet)
+- Bloque final de styles.css «v1.29»: min 44 px en volver, ✕, altavoz, pasos hechos (zona táctil con borde transparente), pestañas del tutor, Guardar copia, Deshacer/Reiniciar, herramientas de la pizarra, +/− y huecos en modo lección.
+- `role="status" aria-live="polite"` en el mensaje de Bloquito (game.js); `:focus-visible` naranja global.
+- `tests/tap44.js` mide todos los controles en 390 y 1180 px (inicio, aprender, mapa, álbum, perfiles, tutor, 7 pasos de juego).

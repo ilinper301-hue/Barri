@@ -9,7 +9,7 @@ Tras cada paso: `python3 tools/ck.py "qué se hizo"` (1 línea). Al empezar una 
 (vacío)
 
 ## Estado de entrega
-- Versión publicada: **1.28.0** (caché barri-pwa-35). Desde el 13/11/2026 este repositorio contiene fuente + app publicada; flujo en `CLAUDE.md`, plan de mejoras por fases en `PLAN-BARRI.md` (fases 0 y 1 hechas; siguiente: fase 2).
+- Versión publicada: **1.29.0** (caché barri-pwa-36). Desde el 13/11/2026 este repositorio contiene fuente + app publicada; flujo en `CLAUDE.md`, plan de mejoras por fases en `PLAN-BARRI.md` (fases 0, 1 y 2 hechas; siguiente: fase 3).
 - Pendiente de que el usuario pruebe: sincronización real con Firebase y piloto con alumnos.
 - Aviso: la sección «Relevo para Sonnet» de abajo es histórica (v1.13) y ya está hecha.
 
@@ -63,3 +63,4 @@ Reglas: trabaja en src/ y data/, compila `python3 tools/build.py`, prueba con `b
 - [13/11 15:38] Fase 0 de PLAN-BARRI: fuente, tests y docs subidos al repo; build == publicado; tools/publish.py, CLAUDE.md, .nojekyll
 - [18/11 01:31] Fase 1 pasos 1-5: aviso de guardado + medidor, pantalla syncask tras PIN, fusión por campos (ft, rs, repetición de log), lectura incremental por ts del servidor, tests/sync2.js (y sync.js adaptado) OK
 - [18/11 01:35] v1.28.0 publicada (barri-pwa-35); batería completa OK
+- [18/11 01:40] Fase 2: CSS 44px, aria-live, foco, tests/tap44.js; falta batería
