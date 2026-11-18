@@ -21,7 +21,7 @@ Cada fase es un chat independiente. Al terminar una fase: márcala aquí como he
 3. ~~**Fusión «gana el último, entero».**~~ Resuelto en la fase 1.
 4. ~~**Guardado que falla en silencio.**~~ Resuelto en la fase 1.
 5. ~~**Cada sincronización lee todos los alumnos.**~~ Resuelto en la fase 1.
-6. **Sin conexión mala = espera.** El service worker pide siempre a la red primero y sin tiempo límite: con wifi de centro lenta la app tarda en abrir aunque esté guardada. Queda código muerto de fuentes de Google.
+6. ~~**Sin conexión mala = espera.**~~ Resuelto en la fase 6. (original:) El service worker pide siempre a la red primero y sin tiempo límite: con wifi de centro lenta la app tarda en abrir aunque esté guardada. Queda código muerto de fuentes de Google.
 7. **Estado por «intercambio».** Los datos del alumno activo viven en la raíz de `st` y se intercambian con `st.profs` al cambiar de alumno (`stash`, `swStu`, `asStu`). Funciona, pero es frágil: cada función nueva tiene que acordarse de ello.
 8. Menores: `Function("return …")` para calcular la operación (validado, pero sustituible por 10 líneas); los datos no se sanean al cargar, solo al importar; el README dice «7 mundos» con Extremo y las instrucciones del proyecto listan «Pasos múltiples»; `ESTADO.md` y partes de `CONTEXT.md` describen versiones antiguas (1.12–1.13).
 
@@ -56,7 +56,10 @@ Bloquito justo bajo el enunciado en móvil y fijo abajo a la izquierda en tablet
 ### Fase 5 · Inicio, mapa y álbum en listas — ✅ **hecha el 2026-11-18 (v1.32.0)**
 Álbum en lista con progreso, contadores «n de m resueltos» en mundo y nivel, motivo del bloqueo en Retos y Avanzado, estado vacío del álbum. Inicio sin cambios. Detalle en CONTEXT.md §10v.
 
-### Fase 6 · Abrir rápido y diagnóstico — *Sonnet, esfuerzo medio*
+### Fase 6 · Abrir rápido y diagnóstico — ✅ **hecha el 2026-11-18 (v1.33.0)**
+Excel fuera del `index.html` (`banco_problemas.xlsx` aparte, cacheado por el SW; el banco JSON sigue incrustado: 50 KB, no compensa). Service worker con copia guardada primero y actualización en segundo plano; avisa a la app con un mensaje y esta muestra «Hay una versión nueva · Actualizar». `Function()` sustituido por `calcQ()`. Ajustes > Sistema > Diagnóstico (versión, cachés, archivos guardados, espacio, últimos 5 errores en `barri.err`). `tests/v133.js`; `tests/pwa.js` y `run_all.sh` corregidos. Detalle en CONTEXT.md §10w.
+
+*(Texto original de la fase:)* 
 Sacar del `index.html` el Excel incrustado (y, si compensa, el banco) a archivos guardados por el service worker. Abrir desde la copia guardada y avisar cuando haya versión nueva. Quitar `Function()`. Panel «Diagnóstico» en Ajustes: versión, caché, espacio usado y últimos errores (útil al trabajar solo desde el móvil).
 
 ### Fase 7 (opcional) · Estado por alumno sin intercambio — *Opus, esfuerzo alto*

@@ -22,7 +22,7 @@ run "navegación y destinos de la pantalla de inicio" node nav.js
 run "maquetación sin saltos de línea (4 anchos)" node layout.js
 run "animación de inicio" node splash.js
 run "colocación táctil (toque, temblor, cancelar, 2 dedos)" node touch.js
-run "importar/exportar Excel" node excel.js
+run "importar/exportar Excel" env APP_URL=http://localhost:8766/barri/index.html node excel.js
 run "PWA: instalable, offline, service worker" node pwa.js
 run "perfiles, aula, competencias, notas, familias, privacidad" env APP_URL=http://localhost:8766/barri/index.html node profiles.js
 run "modo tablet horizontal (5 tamaños)" node tablet.js
@@ -39,6 +39,7 @@ run "v1.18: cuenta docente (Firebase simulado)" node sync.js
 run "v1.29: controles de 44 px, aria-live y foco visible" node tap44.js
 run "v1.31: pantalla de juego (Bloquito fijo, pizarra plegable, barras al ancho, horizontal bajo)" node v131.js
 run "v1.28: que no se pierda nada (fusión, incremental, decisión, guardado)" node sync2.js
+run "v1.33: Function() fuera, Diagnóstico, aviso de versión, Excel aparte" env APP_URL=http://localhost:8766/barri/index.html node v133.js
 run "v1.18.2: bienvenida con Google" node wel.js
 run "v1.19-1.20: Zona del tutor (Progreso · Alumno · Ajustes)" node v119.js
 run "v1.24: mundo Avanzado (5.º y 6.º)" node v124.js

@@ -9,7 +9,7 @@ Tras cada paso: `python3 tools/ck.py "qué se hizo"` (1 línea). Al empezar una 
 (vacío)
 
 ## Estado de entrega
-- Versión publicada: **1.32.0** (caché barri-pwa-39). Desde el 13/11/2026 este repositorio contiene fuente + app publicada; flujo en `CLAUDE.md`, plan de mejoras por fases en `PLAN-BARRI.md` (fases 0-5 hechas; siguiente: fase 6 (Sonnet) o 7).
+- Versión publicada: **1.33.0** (caché barri-pwa-40). Desde el 13/11/2026 este repositorio contiene fuente + app publicada; flujo en `CLAUDE.md`, plan de mejoras por fases en `PLAN-BARRI.md` (fases 0-6 hechas; siguiente: fase 7 (opcional, Opus)).
 - Pendiente de que el usuario pruebe: sincronización real con Firebase y piloto con alumnos.
 - Aviso: la sección «Relevo para Sonnet» de abajo es histórica (v1.13) y ya está hecha.
 
@@ -70,3 +70,4 @@ Reglas: trabaja en src/ y data/, compila `python3 tools/build.py`, prueba con `b
 - [18/11 12:54] 1-4: Bloquito bajo el enunciado (móvil) y abajo a la izquierda fijo y sticky (tableta); pizarra plegable (botón en barra superior, cerrada por defecto); pasos en la barra superior; modelo a la izquierda en Calcular/Comprobar; wide() ajusta barras al ancho; teclado 6 col y compacto en horizontal bajo; 844x390 de 1044/1062 con scroll a 51 (máx 65px); falta tests
 - [18/11 13:08] 5-6: tests/v131.js + pad.js adaptado; batería completa OK; v1.31.0 (barri-pwa-38); CONTEXT §10u, PLAN fase 4 hecha
 - [18/11 13:13] Fase 5 hecha: álbum en lista, contadores, bloqueo; v1.32.0
+- [18/11 13:35] Fase 6 hecha: v1.33.0, batería OK

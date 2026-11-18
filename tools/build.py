@@ -73,13 +73,13 @@ def main():
     probs = [p for p in (convert(r) for r in rows) if p]
     data_js = "\nconst DATA=" + json.dumps({"problems": probs}, ensure_ascii=False) + ";\n\n"
     (R / "tests").mkdir(exist_ok=True); (R / "tests" / "rows.json").write_text(json.dumps(rows, ensure_ascii=False))
-    b64 = base64.b64encode(XLSX.read_bytes()).decode()
     tpl = (R / "src" / "index.template.html").read_text()
     html = (tpl.replace("{{CSS}}", (R / "src/css/styles.css").read_text())
                .replace("{{DATA_JS}}", data_js)
                .replace("{{GAME_JS}}", (R / "src/js/game.js").read_text())
-               .replace("{{APP_JS}}", (R / "src/js/app.js").read_text().replace("{{XLSX_B64}}", b64)))
+               .replace("{{APP_JS}}", (R / "src/js/app.js").read_text()))
     (R / "dist").mkdir(exist_ok=True); (R / "dist" / "index.html").write_text(html)
+    shutil.copy(XLSX, R / "dist" / "banco_problemas.xlsx")
     for f in (R / "src" / "pwa").iterdir(): shutil.copy(f, R / "dist" / f.name)
     (R / "dist" / "fonts").mkdir(exist_ok=True)
     for f in (R / "src" / "fonts").iterdir(): shutil.copy(f, R / "dist" / "fonts" / f.name)

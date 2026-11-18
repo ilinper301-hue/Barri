@@ -1,8 +1,7 @@
 
-const XLSX_B64="{{XLSX_B64}}";
 const ORIG=DATA.problems;
 // Barri: navegación, progreso, álbum y zona de adultos. El juego (4 pasos) vive en game.js
-const KEY="barri.v1",VER="1.32.0 · 18 nov 2026",DEF=()=>({name:"",stars:0,solved:{},log:[],days:[],acc:"casco",theme:"",set:{dur:15,voice:""},bank:null,bankFile:null,notes:"",ap:{},place:{},cur:"p1",profs:{},rol:"doc",pin:""});
+const KEY="barri.v1",VER="1.33.0 · 18 nov 2026",DEF=()=>({name:"",stars:0,solved:{},log:[],days:[],acc:"casco",theme:"",set:{dur:15,voice:""},bank:null,bankFile:null,notes:"",ap:{},place:{},cur:"p1",profs:{},rol:"doc",pin:""});
 let st;try{st=Object.assign(DEF(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){st=DEF()}
 const theme=()=>{if(st.theme)document.documentElement.dataset.theme=st.theme;else delete document.documentElement.dataset.theme;if(st.ap&&st.ap.cb)document.documentElement.dataset.cb="1";else delete document.documentElement.dataset.cb;tcol()};
 /* v1.27: las barras del sistema (estado y navegación) toman el color del fondo de la pantalla actual */
@@ -19,7 +18,7 @@ function enterMd(){if(st.cur==="md"||st.rol==="fam")return;stash();Object.assign
 function swStu(id){if(id===st.cur||!st.profs[id])return;stash();const q=st.profs[id];delete st.profs[id];Object.assign(st,blank(),q);st.cur=id;save()}
 function addStu(n){stash();const id="p"+Date.now().toString(36);Object.assign(st,blank(n));st.cur=id;save()}
 function delStu(id){st.del[id]=Date.now();if(id===st.cur){const o=Object.keys(st.profs)[0];if(o)swStu(o);else{Object.assign(st,blank());save();return}}delete st.profs[id];save()}
-let XMSG="",INST=null;
+let XMSG="",INST=null,DG="";
 window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();INST=e;if(scr==="tutor")show()});window.addEventListener("appinstalled",()=>{INST=null;if(scr==="tutor")show()});
 const WN={1:"Suma y resta",2:"Comparación",3:"Fracciones",4:"Multiplicar y dividir",5:"Retos",6:"Extremo",7:"Avanzado"},WC={1:"#0E7490",2:"#2563EB",3:"#F59E0B",4:"#7C3AED",5:"#DB2777",6:"#334155",7:"#0D9488"},WS=[1,2,3,4,5,7,6];
 const EX={7:"Problemas de 5.º y 6.º. Antes y después: busca lo que no cambia (la diferencia o el total). Fracción del resto: primero la parte gastada, después la fracción de lo que queda. Razones (3 : 2): dibuja 3 bloques iguales y 2 bloques iguales y averigua cuánto vale uno. Porcentajes: el 25 % es 1 de 4 bloques iguales y el 10 %, 1 de 10.",1:"La barra entera es el total y cada bloque es una parte. El '?' marca la parte o el total que buscas.",2:"Dos barras alineadas por la izquierda: la diferencia es lo que sobresale de la barra larga.",3:"Divide la barra en partes iguales (el denominador) y sombrea las que indica el numerador. Cada parte vale lo mismo.",4:"Bloques iguales repetidos: multiplicar es sumar el mismo bloque; dividir es repartir el total en partes iguales.",6:"Cinco problemas muy difíciles. Casi imposibles sin dibujar: busca qué barras son iguales, cuántas unidades hay y cuánto vale una.",5:"Problemas de varios pasos. Suma y diferencia: quita la diferencia y reparte en dos barras iguales. Dar para igualar: lo que sobra se reparte a medias. Fracción del resto: primero lo gastado, luego una fracción de lo que queda."};
@@ -151,7 +150,7 @@ function tzC(){const vs=(window.speechSynthesis?speechSynthesis.getVoices():[]).
  LH("Pantalla")+LST(ROW({i:"moon",t:"Tema",s:"Automático sigue al dispositivo",c:SEL("thm","thm",[["","Automático"],["light","Claro"],["dark","Oscuro"]],st.theme||"","Tema")}))+
  (FAM()?"":LH("Banco de problemas")+LST(ROW({i:"book",t:"Problemas",s:st.bank?"Importados de Excel":"Banco original",v:DATA.problems.length})+ROW({i:"download",t:"Descargar Excel",on:'data-act="xdl"'})+ROW({i:"up",t:"Importar Excel",on:'data-act="xup"'})+(st.bank?ROW({i:"refresh",t:"Volver al banco original",d:1,on:'data-act="xreset"'}):"")+'<input type="file" id="xf" accept=".xlsx" hidden>')+(XMSG?NOTE(XMSG):"")+NOTE("Edita enunciados, números y pistas en el Excel y súbelo de nuevo. Cada fila necesita su ID (M1-N1-01…). En el mundo 4, hasta 6 bloques iguales."))+
  LH("Seguridad y uso")+LST(`<div class="lr"><span class="li">${ic("lock",19)}</span><span class="lt"><span class="ltt">PIN del tutor</span><small>Para entrar aquí y en el Modo Docente</small></span><span class="lcx"><input id="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="new-password" placeholder="${st.pin?"Nuevo":"4 números"}" aria-label="PIN de 4 números"><button class="lbtn" data-act="setpin">${st.pin?"Cambiar":"Crear"}</button></span></div>`+ROW({i:"user",t:"Perfil de uso",s:FAM()?"Familias: práctica y progreso":"Docente: aula, informes y banco",c:SEL("rol","rol",[["doc","Docente"],["fam","Familias"]],FAM()?"fam":"doc","Perfil de uso")})+ROW({i:"trash",t:"Borrar todos los datos",s:"Alumnos, notas, ajustes y PIN de este dispositivo",d:1,on:'data-act="wipe"'}))+NOTE("Usa solo el nombre de pila o un alias. Sin cuenta, el progreso se guarda solo en este dispositivo y no se envía a nadie; con cuenta, también en tu Firebase privado.")+
- LH("Sistema")+LST(ROW({i:"info",t:"Versión",v:VER})+(INST&&!sa?ROW({i:"download",t:"Instalar en este dispositivo",on:'data-act="inst"'}):"")+ROW({i:"refresh",t:"Buscar actualización",on:'data-act="upd"'})+ROW({i:"download",t:"Actualizar ahora",on:'data-act="updnow"'}))}
+ LH("Sistema")+LST(ROW({i:"info",t:"Versión",v:VER})+(INST&&!sa?ROW({i:"download",t:"Instalar en este dispositivo",on:'data-act="inst"'}):"")+ROW({i:"refresh",t:"Buscar actualización",on:'data-act="upd"'})+ROW({i:"download",t:"Actualizar ahora",on:'data-act="updnow"'})+ROW({i:"info",t:"Diagnóstico",s:"Versión, copia guardada, espacio y últimos errores",on:'data-act="diag"',nc:1}))+(DG?NOTE(DG):"")}
 function tzA(){const R=roster().map(([id,o])=>asStu(o,()=>({id,nm:st.name||"Alumno",lv:lvTxt(),sv:Object.keys(st.solved).length,wk:wkMin(),sk:streak(),la:lastAct(),rv:review().length,hd:hardW(),nt:st.notes}))),cur=st.cur,act=R.filter(r=>r.wk>0).length,tm=R.reduce((s,r)=>s+r.wk,0),hw={};R.forEach(r=>r.hd.forEach(a=>hw[a[0]]=(hw[a[0]]||0)+1));
  const gr=Object.entries(hw).sort((a,b)=>b[1]-a[1]),sa=(b,s)=>`<div><b>${b}</b><span>${s}</span></div>`;
  return(FAM()?"":`<div class="pst p3">${sa(R.length,R.length===1?"Alumno":"Alumnos")}${sa(act,"Activos esta semana")}${sa(tm+" min","Uso semanal")}</div>${gr.length?`<div class="pal"><b>Para reforzar en grupo</b><div class="chips">${gr.map(([w,n])=>`<span class="cp">${WN[w]} · ${pl(n,"alumno","alumnos")}</span>`).join("")}</div><p class="lnote" style="margin:6px 0 0">Mundos donde varios alumnos aciertan sin errores menos del 75 %.</p></div>`:""}`)+
@@ -403,7 +402,7 @@ else if(a==="snd"){st.set.snd=g("snd").value==="1";gsave();if(st.set.snd&&window
 else if(a==="wipe"){st=DEF();DATA.problems=ORIG;save();theme();go("home")}
 else if(a==="save")shareBk();
 else if(a==="restore")g("rf").click();
-else if(a==="upd")upd(false);else if(a==="updnow")upd(true);else if(a==="inst"&&INST){INST.prompt();INST=null}
+else if(a==="diag")diag();else if(a==="upd")upd(false);else if(a==="updnow")upd(true);else if(a==="inst"&&INST){INST.prompt();INST=null}
 else if(a==="print")window.print();
 else if(a==="xdl")xdl();else if(a==="xup")g("xf").click();
 else if(a==="xreset"){st.bank=null;st.bankFile=null;DATA.problems=ORIG;XMSG="";save();go("tutor",{tab:"c"})}
@@ -423,7 +422,7 @@ document.addEventListener("input",e=>{const t=e.target;if(t.id==="nn"){const b=d
 document.addEventListener("change",e=>{const ch=e.target.dataset&&e.target.dataset.ch;if(ch==="fic"){const g=i=>document.getElementById(i);const w=+g("fw").value;if(w!==FIC.w){FIC.w=w;FIC.l=0}else FIC.l=+g("fl").value;FIC.n=+g("fn").value;FIC.sol=g("fs").value==="1"?1:0;show();return}if(ch){doAct(ch,{ch:1});return}if(e.target.id==="xf"){importX(e.target.files[0]);e.target.value="";return}if(e.target.id==="rf"){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{st=cleanAll(JSON.parse(r.result));DATA.problems=st.bank&&st.bank.length?st.bank:ORIG;bkSet();save();theme();go("tutor",{tab:"s"})}catch(x){alert("Archivo no válido")}};r.readAsText(f)}});
 
 const b64blob=b=>{const s=atob(b),u=new Uint8Array(s.length);for(let i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return new Blob([u],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"})};
-function xdl(){const a=document.createElement("a");a.href=URL.createObjectURL(b64blob(st.bankFile||XLSX_B64));a.download="banco_problemas.xlsx";a.click()}
+async function xdl(){try{const bl=st.bankFile?b64blob(st.bankFile):await fetch("banco_problemas.xlsx").then(r=>{if(!r.ok)throw Error(r.status);return r.blob()});const a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download="banco_problemas.xlsx";a.click()}catch(e){XMSG="No se pudo descargar el Excel. Comprueba la conexión e inténtalo de nuevo.";go("tutor",{tab:"c"})}}
 async function unzip(buf){const u=new Uint8Array(buf),dv=new DataView(buf);let e=u.length-22;while(e>=0&&dv.getUint32(e,true)!==0x06054b50)e--;if(e<0)throw Error("No es un archivo .xlsx");const n=dv.getUint16(e+10,true);let p=dv.getUint32(e+16,true);const out={};
 for(let i=0;i<n;i++){const meth=dv.getUint16(p+10,true),csz=dv.getUint32(p+20,true),nl=dv.getUint16(p+28,true),el=dv.getUint16(p+30,true),cl=dv.getUint16(p+32,true),off=dv.getUint32(p+42,true),name=new TextDecoder().decode(u.subarray(p+46,p+46+nl));p+=46+nl+el+cl;
 const ds=off+30+dv.getUint16(off+26,true)+dv.getUint16(off+28,true),data=u.subarray(ds,ds+csz);
@@ -467,5 +466,21 @@ s.addEventListener("pointerdown",end);setTimeout(end,red?900:3300)}
 ftBase();svBan();theme();go(!localStorage.getItem("barri.wel")&&fbCfg()&&isBlank()&&(!/nosplash/.test(location.search)||/wel/.test(location.search))?"wel":"home");if(!isBlank())localStorage.setItem("barri.wel","1");splash();
 if(fbCfg()&&localStorage.getItem("barri.sync.uid")&&navigator.onLine!==false)fbInit().catch(()=>{});
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&FBU){clearTimeout(SYNC.t);syncNow().catch(()=>{})}});
+/* v1.33 · diagnóstico: últimos errores (barri.err), estado de la copia guardada y aviso de versión nueva */
+const ERRK="barri.err",errs=()=>{try{return JSON.parse(localStorage.getItem(ERRK)||"[]")}catch(e){return[]}};
+function logErr(m){try{const a=errs();a.push({t:Date.now(),m:String(m).slice(0,160)});localStorage.setItem(ERRK,JSON.stringify(a.slice(-5)))}catch(e){}}
+window.addEventListener("error",e=>logErr((e.message||"error")+(e.lineno?" (línea "+e.lineno+")":"")));
+window.addEventListener("unhandledrejection",e=>logErr("promesa: "+((e.reason&&e.reason.message)||e.reason||"")));
+async function diag(){const L=[],hm=t=>new Date(t).toLocaleString("es-ES",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"});
+ L.push("Versión "+VER);
+ try{const k=(await caches.keys()).filter(x=>x.startsWith("barri-pwa-"));L.push("Copia guardada: "+(k.join(", ")||"ninguna"));if(k.length){const c=await caches.open(k[k.length-1]);L.push("Archivos guardados: "+(await c.keys()).length)}}catch(e){L.push("Copia guardada: no disponible")}
+ L.push("Funciona sin conexión: "+(navigator.serviceWorker&&navigator.serviceWorker.controller?"sí":"no"));
+ try{const e=await navigator.storage.estimate();L.push("Espacio del sitio: "+kb(e.usage)+" de "+kb(e.quota))}catch(e){}
+ L.push("Datos de Barri: "+kb(stoUse().me)+(NEWV?" · hay versión nueva":""));
+ const a=errs();L.push(a.length?"Últimos errores: "+a.map(x=>hm(x.t)+" "+x.m).join(" | "):"Sin errores registrados");
+ DG=L.map(esc).join("<br>");go("tutor",{tab:"c"})}
+let NEWV=false;
+function updBan(){if(document.getElementById("updbar")||!document.body)return;const b=document.createElement("div");b.id="updbar";b.setAttribute("role","status");b.innerHTML=`<div class="bk"><span class="ib2" aria-hidden="true">${ic("refresh",22)}</span><div><b>Hay una versión nueva de Barri</b><small>Se aplica al actualizar.</small></div><button class="sb" type="button">Actualizar</button></div>`;b.querySelector("button").onclick=()=>location.reload();document.body.prepend(b)}
+if("serviceWorker" in navigator)navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.t==="nuevo"){NEWV=true;updBan()}});
 if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 

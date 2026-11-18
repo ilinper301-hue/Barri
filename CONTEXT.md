@@ -273,3 +273,9 @@ El usuario no puede evitar escribir "Continúa" cuando te cortan. Hazlo barato:
 - Álbum: insignias en filas `.bdr` (icono, nombre, descripción, barra hacia el siguiente nivel, «v de n», bronce/plata/oro); estado vacío con invitación a resolver el primer problema.
 - Mapa: contador del mundo «0 de 140 resueltos» (igual que el nivel) y motivo del bloqueo en la tarjeta (`wlk()`): Retos y Avanzado.
 - Inicio no cambia (ya es una lista de acciones con Aventuras destacada).
+
+### 10w · v1.33.0 (fase 6)
+- `banco_problemas.xlsx` se publica aparte (build.py lo copia a dist); `xdl()` lo descarga con fetch (necesita http, no file://; run_all lo prueba en :8766). `XLSX_B64` ya no existe.
+- `sw.js` (barri-pwa-40): copia guardada primero (`ignoreSearch`, navegaciones → index.html) y se refresca en segundo plano; al activarse sobre una versión anterior manda `{t:"nuevo"}` a las pestañas y app.js muestra `#updbar` (no recarga sola).
+- `calcQ(q)` en game.js evalúa operaciones con prioridad × ÷ (sin `Function`).
+- Diagnóstico: `diag()` rellena `DG`; errores en `barri.err` (máx. 5, `logErr`).

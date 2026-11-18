@@ -9,7 +9,7 @@ try{const id=await cdp.send("Page.getAppId");console.log("ID de la app:",id.appI
 const ie=await cdp.send("Page.getInstallabilityErrors");console.log("errores de instalabilidad:",JSON.stringify(ie.installabilityErrors));
 console.log("service worker:",await page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();return r?r.scope:null}));
 await page.reload();await page.waitForTimeout(500);
-await ctx.setOffline(true);await page.reload();await page.waitForTimeout(600);console.log("sin conexión abre:",await page.evaluate(()=>!!document.querySelector(".hm")));await ctx.setOffline(false);
+await ctx.setOffline(true);await page.reload();await page.waitForTimeout(600);console.log("sin conexión abre:",await page.evaluate(()=>document.getElementById("app").innerText.length>20));await ctx.setOffline(false);
 // pantallas
 await page.evaluate(()=>{st.name="Gael";st.stars=3;save();go("home")});await page.waitForTimeout(250);await page.screenshot({path:process.env.TMPD+"/n_home.png"});
 await page.evaluate(()=>{st.theme="light";theme();go("home")});await page.waitForTimeout(150);await page.screenshot({path:process.env.TMPD+"/n_home_l.png",clip:{x:0,y:0,width:390,height:330}});await page.evaluate(()=>{st.theme="dark";theme()});

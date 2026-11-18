@@ -778,7 +778,7 @@ body:has(.tz){background:#F5F6FA}
 }
 
 /* ===== v1.28 · Fase 1: guardado, espacio y primera sincronización ===== */
-#sverr{padding:10px 12px 0;max-width:900px;margin:0 auto}#sverr .bk{border-radius:var(--r3)}
+#sverr,#updbar{padding:10px 12px 0;max-width:900px;margin:0 auto}#sverr .bk,#updbar .bk{border-radius:var(--r3)}
 .tz .lsto{flex-direction:column;align-items:stretch;gap:10px}
 .stob{display:flex;height:10px;border-radius:var(--r1);background:var(--seg);overflow:hidden}.stob i{display:block;height:100%;background:var(--ac)}.stob i.o{background:var(--mu);opacity:.55}
 .stol{display:flex;flex-wrap:wrap;gap:4px 14px;font:400 .8rem 'Inter',sans-serif;color:var(--mu)}.stol span{display:inline-flex;align-items:center;gap:6px}.stol i{width:10px;height:10px;border-radius:3px;background:var(--ac)}.stol i.o{background:var(--mu);opacity:.55}
