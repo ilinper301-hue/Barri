@@ -2,15 +2,15 @@
 const XLSX_B64="{{XLSX_B64}}";
 const ORIG=DATA.problems;
 // Barri: navegación, progreso, álbum y zona de adultos. El juego (4 pasos) vive en game.js
-const KEY="barri.v1",VER="1.27.0 · 31 oct 2026",DEF=()=>({name:"",stars:0,solved:{},log:[],days:[],acc:"casco",theme:"",set:{dur:15,voice:""},bank:null,bankFile:null,notes:"",ap:{},place:{},cur:"p1",profs:{},rol:"doc",pin:""});
+const KEY="barri.v1",VER="1.28.0 · 18 nov 2026",DEF=()=>({name:"",stars:0,solved:{},log:[],days:[],acc:"casco",theme:"",set:{dur:15,voice:""},bank:null,bankFile:null,notes:"",ap:{},place:{},cur:"p1",profs:{},rol:"doc",pin:""});
 let st;try{st=Object.assign(DEF(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){st=DEF()}
 const theme=()=>{if(st.theme)document.documentElement.dataset.theme=st.theme;else delete document.documentElement.dataset.theme;if(st.ap&&st.ap.cb)document.documentElement.dataset.cb="1";else delete document.documentElement.dataset.cb;tcol()};
 /* v1.27: las barras del sistema (estado y navegación) toman el color del fondo de la pantalla actual */
 function tcol(){try{const c=getComputedStyle(document.body||document.documentElement).backgroundColor;if(!c||c==="rgba(0, 0, 0, 0)")return;const M=[...document.querySelectorAll('meta[name="theme-color"]')];M.forEach((m,i)=>{if(i)m.remove()});let m=M[0];if(!m){m=document.createElement("meta");m.name="theme-color";document.head.appendChild(m)}m.removeAttribute("media");if(m.content!==c)m.content=c}catch(e){}}
 try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>setTimeout(tcol,50))}catch(e){}
-const saveRaw=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}},save=()=>{if(st.cur!=="md")st.mt=Date.now();saveRaw();if(typeof syncSoon==="function")syncSoon()},gsave=()=>{st.gmt=Date.now();save()};
+let SVERR=0;const saveRaw=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));if(SVERR){SVERR=0;svBan()}}catch(e){SVERR=Date.now();svBan()}},save=()=>{if(st.cur!=="md"){st.mt=Date.now();stampFt()}saveRaw();if(typeof syncSoon==="function")syncSoon()},gsave=()=>{st.gmt=Date.now();save()};
 if(st.bank&&st.bank.length)DATA.problems=st.bank;
-const STU=["name","stars","solved","log","days","acc","notes","ap","place","mt","dur"],blank=n=>({name:n||"",stars:0,solved:{},log:[],days:[],acc:"casco",notes:"",ap:{},place:{},mt:0,dur:null}),snap=()=>{const o={};STU.forEach(k=>o[k]=st[k]);return o};
+const FT=["name","acc","notes","ap","place","dur"],STU=["name","stars","solved","log","days","acc","notes","ap","place","mt","dur","ft","rs"],blank=n=>({name:n||"",stars:0,solved:{},log:[],days:[],acc:"casco",notes:"",ap:{},place:{},mt:0,dur:null,ft:{},rs:0}),snap=()=>{const o={};STU.forEach(k=>o[k]=st[k]);return o};
 if(!st.profs||typeof st.profs!=="object")st.profs={};if(!st.del||typeof st.del!=="object")st.del={};if(!st.cur)st.cur="p1";if(typeof st.notes!=="string")st.notes="";if(st.rol!=="fam")st.rol="doc";if(typeof st.pin!=="string"||!/^\d{4}$/.test(st.pin))st.pin="";if(!st.set||typeof st.set!=="object")st.set={dur:15,voice:""};if(typeof st.set.snd!=="boolean")st.set.snd=true;
 const FAM=()=>st.rol==="fam",MD=()=>st.cur==="md"&&st.rol==="doc",stash=()=>{if(st.cur!=="md")st.profs[st.cur]=snap()};
 const roster=()=>[...(st.cur==="md"?[]:[[st.cur,snap()]]),...Object.entries(st.profs)].sort((a,b)=>(a[1].name||"").localeCompare(b[1].name||"","es"));
@@ -75,7 +75,7 @@ const bkBanner=()=>{if(!bkDue())return"";const a=bkAge();return`<div class="bk">
 const cleanLog=l=>(Array.isArray(l)?l:[]).slice(-500).filter(x=>x&&typeof x==="object").map(x=>{const o={};Object.entries(x).slice(0,14).forEach(([k,v])=>{if(/^\w{1,8}$/.test(k)&&(typeof v==="number"&&isFinite(v)||typeof v==="boolean"||typeof v==="string"&&v.length<40))o[k]=v});return o});
 const cleanAp=o=>{o=o&&typeof o==="object"?o:{};const m=v=>["w12","all","off"].includes(v)?v:"w12";return{cp:m(o.cp),nr:m(o.nr),cb:o.cb===true,apo:o.apo==="off"?"off":"on"}};
 const cleanPl=o=>{const r={};if(o&&typeof o==="object")for(const w of [1,2,3,4,5,6,7]){const v=+o[w];if(v>=1&&v<=4)r[w]=Math.floor(v)}return r};
-function cleanStu(o){o=o&&typeof o==="object"?o:{};const s={name:ss(o.name,30),stars:iv(o.stars),solved:{},log:cleanLog(o.log),days:(Array.isArray(o.days)?o.days:[]).filter(d=>/^\d{4}-\d\d-\d\d$/.test(d)).slice(-400),acc:ACC.some(a=>a[0]===o.acc)?o.acc:"casco",notes:ss(o.notes,600),ap:cleanAp(o.ap),place:cleanPl(o.place),dur:[0,10,15,20,30].includes(o.dur)?o.dur:null,mt:+o.mt>0&&+o.mt<4e12?+o.mt:0};Object.entries(o.solved&&typeof o.solved==="object"&&!Array.isArray(o.solved)?o.solved:{}).slice(0,2000).forEach(([k,v])=>{if(/^[\w-]{1,24}$/.test(k))s.solved[k]=iv(v,0,9)});return s}
+function cleanStu(o){o=o&&typeof o==="object"?o:{};const s={name:ss(o.name,30),stars:iv(o.stars),solved:{},log:cleanLog(o.log),days:(Array.isArray(o.days)?o.days:[]).filter(d=>/^\d{4}-\d\d-\d\d$/.test(d)).slice(-400),acc:ACC.some(a=>a[0]===o.acc)?o.acc:"casco",notes:ss(o.notes,600),ap:cleanAp(o.ap),place:cleanPl(o.place),dur:[0,10,15,20,30].includes(o.dur)?o.dur:null,mt:+o.mt>0&&+o.mt<4e12?+o.mt:0,ft:{},rs:+o.rs>0&&+o.rs<4e12?+o.rs:0};if(o.ft&&typeof o.ft==="object")FT.forEach(k=>{const v=+o.ft[k];if(v>0&&v<4e12)s.ft[k]=v});Object.entries(o.solved&&typeof o.solved==="object"&&!Array.isArray(o.solved)?o.solved:{}).slice(0,2000).forEach(([k,v])=>{if(/^[\w-]{1,24}$/.test(k))s.solved[k]=iv(v,0,9)});return s}
 function cleanAll(j){const r=j&&j.v&&j.st?j.st:j;if(!r||typeof r!=="object"||Array.isArray(r))throw new Error("copia no válida");const o=Object.assign(DEF(),cleanStu(r)),s=r.set&&typeof r.set==="object"?r.set:{};o.rol=r.rol==="fam"?"fam":"doc";o.pin=typeof r.pin==="string"&&/^\d{4}$/.test(r.pin)?r.pin:"";o.theme=r.theme==="dark"||r.theme==="light"?r.theme:null;o.set={dur:+s.dur>=1&&+s.dur<=120?Math.round(+s.dur):15,voice:typeof s.voice==="string"?ss(s.voice,120):"",snd:s.snd!==false};
 if(Array.isArray(r.bank)&&r.bank.length&&r.bank.length<2000&&r.bank.every(p=>p&&typeof p==="object"&&typeof p.id==="string"&&Array.isArray(p.rows))){o.bank=r.bank;o.bankFile=ss(r.bankFile,80)}else{o.bank=null;o.bankFile=null}
 o.cur=/^p\w{1,12}$/.test(r.cur)?r.cur:"p1";o.profs={};Object.entries(r.profs&&typeof r.profs==="object"&&!Array.isArray(r.profs)?r.profs:{}).slice(0,60).forEach(([k,v])=>{if(/^p\w{1,12}$/.test(k)&&k!==o.cur)o.profs[k]=cleanStu(v)});return o}
@@ -84,7 +84,7 @@ try{f=new File([txt],nm,{type:"application/json"});if(!(navigator.canShare&&navi
 const dlb=t=>{dl(nm,txt,"application/json");bkSet();m(t)};
 if(f&&navigator.share&&navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:"Copia de seguridad de Barri"});bkSet();m("Copia enviada. Compruebe en Drive que se ha guardado.")}catch(e){if(e&&e.name==="AbortError")return;dlb("No se pudo compartir; la copia se ha descargado.")}}else dlb("Este navegador no permite compartir; la copia se ha descargado.")}
 const bkState=()=>{if(st.cur!=="md")return st;const c=JSON.parse(JSON.stringify(st)),id=Object.keys(c.profs)[0];if(id){Object.assign(c,cleanStu(c.profs[id]),{cur:id});delete c.profs[id]}else Object.assign(c,blank(),{cur:"p1"});return c};
-function gateOk(){UNL=Date.now();const nx=cx.next;if(nx==="md"){enterMd();theme();return go("home")}return go("tutor",{tab:"p"})}
+function gateOk(){UNL=Date.now();const nx=cx.next;if(nx==="md"){enterMd();theme();return go("home")}if(SYNC.ask)return go("syncask");if(nx==="sto")return goSto();return go("tutor",{tab:"p"})}
 const psel=(w,l)=>{const L=pool(w,l);return`<details class="psel"><summary>Elegir problema (${L.length})</summary><div class="pgrid">${L.map((q,k)=>`<button class="pp${st.solved[q.id]?" ok":""}" data-pp="${w},${l},${k}"><b>${k+1}</b><span>${esc(q.t)}</span></button>`).join("")}</div></details>`};
 const WI={1:"+−",2:"&lt;&gt;",3:"½",4:"×÷",5:"★",6:"⚡",7:"%"},WD={1:"Juntar y quitar: las partes forman un total.",2:"Quién tiene más y cuánto más: dos barras.",3:"Partes iguales de un total.",4:"Grupos iguales que se repiten o se reparten.",5:"Problemas de varios pasos para expertos.",6:"Cinco retos muy difíciles: casi imposibles sin barras.",7:"Para 5.º y 6.º: antes y después, fracción del resto, razones y porcentajes."};
 const NM=["","Modelo casi hecho","Completa el modelo","Construye tú","Dibuja tú"];
@@ -125,7 +125,7 @@ function tzP(){if(cx.sub)return tzSub(cx.sub);
 function accRows(){const c=fbCfg(),ago=SYNC.last?Math.round((Date.now()-SYNC.last)/60000):null,when=ago===null?"aún no":ago<1?"hace un momento":ago<60?`hace ${ago} min`:`hace ${Math.round(ago/60)} h`,er=SYNC.err?NOTE(`<span class="pinerr">${esc(SYNC.err)}</span>`):"",h=LH(FAM()?"Cuenta":"Cuenta docente");
  if(!c)return h+`<div class="ls lsac"><p class="lnote" style="margin:0 0 8px">Pega la configuración de tu proyecto de Firebase (Configuración del proyecto › Tus apps).</p><textarea id="fbc" rows="4" placeholder="const firebaseConfig = { apiKey: &quot;…&quot;, projectId: &quot;…&quot;, appId: &quot;…&quot; };"></textarea><button class="lbtn" data-act="fbcfg" style="margin-top:8px">Guardar configuración</button></div>`+er;
  if(!FBU)return h+`<div class="ls lsac"><p class="lnote" style="margin:0 0 10px">Entra con tu cuenta de Google para guardar ${FAM()?"el progreso":"el aula"} en la nube y tenerl${FAM()?"o":"a"} igual en todos tus dispositivos.</p><button class="sb gbtn ggl" data-act="fblogin">${GLG} Entrar con Google</button>${FB_CFG?"":`<button class="lnk" data-act="fbcfgx">Cambiar el proyecto de Firebase</button>`}</div>`+er;
- return h+LST(ROW({av:esc(((FBU.displayName||FBU.email||"D")[0]||"D").toUpperCase()),t:esc(FBU.displayName||(FAM()?"Familia":"Docente")),s:esc(FBU.email||"")})+ROW({i:"cloud",t:SYNC.busy?"Sincronizando…":"Sincronizar ahora",s:"Última sincronización: "+when,on:'data-act="fbsync"',nc:1})+ROW({i:"x",t:"Cerrar sesión",on:'data-act="fblogout"',nc:1}))+er+NOTE("Se sincroniza sola al jugar y al abrir la app. Solo tu cuenta puede leer estos datos.")}
+ return h+(SYNC.ask?LST(ROW({i:"info",t:"Falta decidir qué hacer con los datos",s:"La sincronización está en pausa hasta que elijas",on:'data-go="syncask"',k:"skw"})):"")+LST(ROW({av:esc(((FBU.displayName||FBU.email||"D")[0]||"D").toUpperCase()),t:esc(FBU.displayName||(FAM()?"Familia":"Docente")),s:esc(FBU.email||"")})+ROW({i:"cloud",t:SYNC.busy?"Sincronizando…":"Sincronizar ahora",s:"Última sincronización: "+when,on:'data-act="fbsync"',nc:1})+ROW({i:"x",t:"Cerrar sesión",on:'data-act="fblogout"',nc:1}))+er+NOTE("Se sincroniza sola al jugar y al abrir la app. Solo tu cuenta puede leer estos datos.")}
 const durOf=()=>st.dur==null?(st.set.dur||15):st.dur;
 const PLN=["","Nivel 1 · Modelo casi hecho","Nivel 2 · Completa el modelo","Nivel 3 · Construye tú","Nivel 4 · Dibuja tú"];
 function tzU(){const ap=cleanAp(st.ap),o3=[["w12","Mundos 1 y 2"],["all","Todos"],["off","No"]],oo=[["on","Sí"],["off","No"]],pv=[1,2,3].map(i=>`<i data-p="${i}" style="background-color:${WC[i]}"></i>`).join("");
@@ -144,7 +144,7 @@ function tzU(){const ap=cleanAp(st.ap),o3=[["w12","Mundos 1 y 2"],["all","Todos"
  LH("Gestión")+LST(ROW({i:"refresh",t:"Reiniciar progreso",s:"Vuelve a empezar; se conservan el nombre y las notas",d:1,on:'data-act="reset"'})+ROW({i:"trash",t:"Borrar alumno",s:"Se borra de este dispositivo y de la cuenta",d:1,on:'data-act="delp"'}))}
 function tzC(){const vs=(window.speechSynthesis?speechSynthesis.getVoices():[]).filter(v=>v.lang.startsWith("es")),sa=matchMedia("(display-mode: standalone)").matches;
  return accRows()+
- LH("Copias de seguridad")+LST(ROW({i:"download",t:"Guardar copia",s:bkTxt(),on:'data-act="save"'})+ROW({i:"refresh",t:"Restaurar una copia",on:'data-act="restore"'})+'<input type="file" id="rf" accept=".json" hidden>')+NOTE("Se guardan todos los alumnos. «Guardar copia» abre el menú de compartir del dispositivo (ahí aparece Drive).")+
+ LH("Copias de seguridad")+LST(ROW({i:"download",t:"Guardar copia",s:bkTxt(),on:'data-act="save"'})+ROW({i:"refresh",t:"Restaurar una copia",on:'data-act="restore"'})+'<input type="file" id="rf" accept=".json" hidden>')+NOTE("Se guardan todos los alumnos. «Guardar copia» abre el menú de compartir del dispositivo (ahí aparece Drive).")+stoSec()+
  LH("Alumnos")+LST(ROW({i:"chart",t:FAM()?"Todos los alumnos":"Vista de aula",s:FAM()?"Progreso de cada uno":"Todos los alumnos y exportar a hoja de cálculo",v:roster().length,on:'data-sub="aula"'})+ROW({i:"users",t:"Añadir o cambiar de alumno",on:'data-go="profiles"'}))+
  LH("Sonido")+LST(ROW({i:"user",t:"Voz del dispositivo",s:"Al elegirla suena una prueba",c:`<select id="vo" data-ch="voice" aria-label="Voz"><option value="">Predeterminada</option>${vs.map(v=>`<option${v.name===st.set.voice?" selected":""}>${esc(v.name)}</option>`).join("")}</select>`})+ROW({i:"star",t:"Sonido al acertar",c:SEL("snd","snd",[["1","Sí"],["0","No"]],st.set.snd!==false?"1":"0","Sonido al acertar")})+ROW({i:"play",t:"Probar la voz",on:'data-act="vtest"',nc:1}))+
  LH("Pantalla")+LST(ROW({i:"moon",t:"Tema",s:"Automático sigue al dispositivo",c:SEL("thm","thm",[["","Automático"],["light","Claro"],["dark","Oscuro"]],st.theme||"","Tema")}))+
@@ -249,26 +249,82 @@ function parseCfg(t){const g=k=>{const m=new RegExp(k+"\\s*[:=]\\s*[\"']([^\"']+
 function fbLoad(){if(window.firebase&&firebase.firestore)return Promise.resolve();const ld=f=>new Promise((ok,ko)=>{const s=document.createElement("script");s.src=`https://www.gstatic.com/firebasejs/${FBV}/${f}`;s.onload=ok;s.onerror=()=>ko(Error("No se pudo cargar Firebase (¿sin conexión?)"));document.head.appendChild(s)});return ld("firebase-app-compat.js").then(()=>Promise.all([ld("firebase-auth-compat.js"),ld("firebase-firestore-compat.js")]))}
 async function fbInit(){const c=fbCfg();if(!c)throw Error("Falta la configuración del proyecto");await fbLoad();if(!FB){if(!firebase.apps.length)firebase.initializeApp(c);FB={auth:firebase.auth(),db:firebase.firestore()};FB.auth.onAuthStateChanged(u=>{FBU=u;if(u)syncNow().catch(()=>{});if(scr==="tutor")show()});try{await FB.auth.getRedirectResult()}catch(e){}}return FB}
 async function fbLogin(){try{const f=await fbInit(),pr=new firebase.auth.GoogleAuthProvider();try{await f.auth.signInWithPopup(pr)}catch(e){if(/popup|operation-not-supported/.test(e.code||""))await f.auth.signInWithRedirect(pr);else throw e}}catch(e){SYNC.err=fbErr(e);show()}}
-async function fbLogout(){try{if(FB)await FB.auth.signOut()}catch(e){}FBU=null;localStorage.removeItem("barri.sync.uid");show()}
+async function fbLogout(){try{if(FB)await FB.auth.signOut()}catch(e){}FBU=null;SYNC.ask=null;SYNC.mode="";["barri.sync.uid",SB_K,SC_K].forEach(k=>localStorage.removeItem(k));show()}
 const fbErr=e=>{const c=e&&e.code||"";return c.includes("unauthorized-domain")?"Este dominio no está autorizado en Firebase (Authentication › Ajustes › Dominios autorizados).":c.includes("permission-denied")?"Firebase rechaza el acceso: revisa las reglas de Firestore.":c.includes("popup-closed")?"Se cerró la ventana de Google antes de terminar.":(e&&e.message)||"Error desconocido"};
 const stuOf=()=>{const R={};roster().forEach(([id,o])=>R[id]=cleanStu(o));return R};
 const metaOf=()=>({pin:st.pin,set:st.set,rol:st.rol,theme:st.theme||null,gmt:st.gmt||0,del:st.del||{}});
 const isBlank=()=>{const r=roster();return r.length<=1&&r.every(([,o])=>!o.name&&!o.stars&&!(o.log||[]).length)};
-function syncSoon(){if(!FBU||SYNC.busy)return;clearTimeout(SYNC.t);SYNC.t=setTimeout(()=>syncNow().catch(()=>{}),15000)}
-async function syncNow(force){if(!FBU||SYNC.busy)return;SYNC.busy=true;SYNC.err="";try{const u=FBU.uid,ref=FB.db.collection(FB_COL).doc(u),[md,col]=await Promise.all([ref.get(),ref.collection("stu").get()]);
-const R={};col.forEach(d=>{try{R[d.id]=cleanStu(JSON.parse(d.data().d))}catch(e){}});const RM=md.exists?JSON.parse(md.data().meta||"{}"):null,first=localStorage.getItem("barri.sync.uid")!==u,remoteEmpty=!RM&&!Object.keys(R).length;
-let mode="merge";if(first&&!remoteEmpty)mode=isBlank()?"down":(force||confirm("Tu cuenta ya tiene datos de otro dispositivo.\n\nAceptar: usar los datos de la cuenta (se sustituyen los de este dispositivo).\nCancelar: subir los de este dispositivo a la cuenta (se sustituyen los de la cuenta)."))?"down":"up";
-const L=stuOf(),del=Object.assign({},RM&&RM.del||{},st.del||{});const push={},kill=[];
-if(mode==="down"){applyRemote(R,RM||{});localStorage.setItem("barri.sync.uid",u)}
-else{if(mode==="up")Object.keys(R).forEach(id=>{if(!L[id])kill.push(id)});
- const ids=new Set([...Object.keys(L),...(mode==="up"?[]:Object.keys(R))]);const pull={};
- ids.forEach(id=>{const l=L[id],r=mode==="up"?null:R[id],dt=del[id]||0;if(dt&&dt>=Math.max(l?l.mt:0,r?r.mt:0)){if(r)kill.push(id);if(l)pull[id]=null;return}if(l&&(!r||l.mt>=r.mt)){if(!r||l.mt>r.mt)push[id]=l}else if(r)pull[id]=r});
- Object.entries(pull).forEach(([id,o])=>{if(o===null){if(id===st.cur){const k=Object.keys(st.profs).find(x=>!pull.hasOwnProperty(x)||pull[x]);if(k)swStu(k);else Object.assign(st,blank())}delete st.profs[id];return}if(id===st.cur)Object.assign(st,o);else st.profs[id]=o});
- if(RM&&mode!=="up"&&(RM.gmt||0)>(st.gmt||0))applyMeta(RM);st.del=del;
- const b=FB.db.batch();Object.entries(push).forEach(([id,o])=>b.set(ref.collection("stu").doc(id),{d:JSON.stringify(o),mt:o.mt||0}));kill.forEach(id=>b.delete(ref.collection("stu").doc(id)));b.set(ref,{meta:JSON.stringify(Object.assign(metaOf(),{del})),ts:Date.now()});await b.commit();localStorage.setItem("barri.sync.uid",u)}
-saveRaw();theme();SYNC.last=Date.now();localStorage.setItem("barri.sync.t",SYNC.last);SYNC.n={up:Object.keys(push).length,mode}}catch(e){SYNC.err=fbErr(e)}finally{SYNC.busy=false;if(scr==="tutor"||scr==="home")show()}}
+/* v1.28 (fase 1) · Fusión por campos. Progreso: historial unido por (ts,id), resueltos por máximo y estrellas
+   recalculadas con lo que el otro lado jugó (simétrico para que dos dispositivos lleguen al mismo resultado).
+   Nombre, notas, apoyos, accesorio, punto de partida y tiempo: cada uno con su propia fecha (ft). Un reinicio (rs) manda. */
+const canon=v=>v&&typeof v==="object"?(Array.isArray(v)?"["+v.map(canon).join(",")+"]":"{"+Object.keys(v).sort().map(k=>JSON.stringify(k)+":"+canon(v[k])).join(",")+"}"):JSON.stringify(v===undefined?null:v);
+const shash=o=>{const t=canon(o);let h=5381;for(let i=0;i<t.length;i++)h=(h*33^t.charCodeAt(i))>>>0;return h.toString(36)+t.length.toString(36)};
+const lkey=e=>e.ts+"|"+e.id;
+function replay(b,X){let s=b.stars||0;const sv=Object.assign({},b.solved);X.forEach(e=>{const p=+e.pst||0;if(e.sp)s+=p;else if(e.id&&!sv[e.id]){sv[e.id]=p||1;s+=p}});return{s,sv}}
+function xtra(N,O){const K=new Set(N.log.map(lkey)),cut=Math.max(N.rs||0,N.log.length>=500?+N.log[0].ts||0:0);return O.log.filter(e=>typeof e.ts==="number"&&e.ts>cut&&!K.has(lkey(e)))}
+function mergeStu(l,r){if(!l||!r)return l||r;l=cleanStu(l);r=cleanStu(r);const o={},ft={},lt=k=>l.ft[k]||0,rt=k=>r.ft[k]||0;
+ FT.forEach(k=>{const a=lt(k),b=rt(k),src=a!==b?(a>b?l:r):l.mt!==r.mt?(l.mt>r.mt?l:r):canon(l[k])>=canon(r[k])?l:r;o[k]=JSON.parse(JSON.stringify(src[k]===undefined?null:src[k]));if(Math.max(a,b))ft[k]=Math.max(a,b)});
+ o.ft=ft;o.mt=Math.max(l.mt,r.mt);o.rs=Math.max(l.rs,r.rs);let L,D;
+ if(l.rs!==r.rs){const N=l.rs>r.rs?l:r,O=N===l?r:l,X=xtra(N,O),p=replay(N,X);o.stars=p.s;o.solved=p.sv;L=N.log.concat(X);D=N.days.concat(X.map(e=>day(new Date(e.ts))))}
+ else{const Xr=xtra(l,r),a=replay(l,Xr),b=replay(r,xtra(r,l));o.stars=Math.max(a.s,b.s);o.solved=a.sv;Object.entries(b.sv).forEach(([k,v])=>{if(!(o.solved[k]>=v))o.solved[k]=v});L=l.log.concat(Xr);D=l.days.concat(r.days)}
+ const so={};Object.keys(o.solved).sort().forEach(k=>so[k]=o.solved[k]);o.solved=so;o.log=L.sort((x,y)=>(x.ts||0)-(y.ts||0)||String(x.id).localeCompare(String(y.id))).slice(-500);o.days=[...new Set(D)].sort().slice(-400);return cleanStu(o)}
+/* Sellos por campo: al guardar se compara con lo último guardado del alumno activo. */
+let FTH=null;
+function stampFt(){if(st.cur==="md")return;const id=st.cur,h=FT.map(k=>canon(st[k]));if(FTH&&FTH.id===id){const now=Date.now();if(!st.ft||typeof st.ft!=="object")st.ft={};FT.forEach((k,i)=>{if(h[i]!==FTH.h[i])st.ft[k]=now})}FTH={id,h}}
+const ftBase=()=>{FTH=null;stampFt()};
+/* Sincronización incremental: cada documento lleva la hora del servidor (ts) y solo se leen los cambiados desde
+   la última vez (cursor en barri.sync.c: la hora del servidor más reciente vista, en ms; Firestore guarda µs, así que el corte en ms ya incluye el mismo instante). Lectura completa al empezar, al pulsar
+   «Sincronizar ahora» y una vez al día. En barri.sync.base se guarda la huella de lo que ya está en la nube. */
+const SB_K="barri.sync.base",SC_K="barri.sync.c",ldJ=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||"null")||d}catch(e){return d}},svJ=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){SVERR=Date.now();svBan()}};
+const tsMs=v=>v&&typeof v.toMillis==="function"?v.toMillis():+v||0,fsNow=()=>{try{return firebase.firestore.FieldValue.serverTimestamp()}catch(e){return Date.now()}},fsTs=ms=>{try{return firebase.firestore.Timestamp.fromMillis(ms)}catch(e){return ms}};
+const nnm=s=>String(s||"").trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+function nameMatch(){const a=SYNC.ask;if(!a)return{};const by=L=>{const m={};L.forEach(([id,n])=>{const k=nnm(n);if(k)(m[k]=m[k]||[]).push(id)});return m},lo=by(roster().map(([id,o])=>[id,o.name])),re=by(a.rn),M={};Object.keys(lo).forEach(k=>{if(re[k]&&lo[k].length===1&&re[k].length===1)M[lo[k][0]]=re[k][0]});return M}
+function syncSoon(){if(!FBU||SYNC.busy||SYNC.ask)return;clearTimeout(SYNC.t);SYNC.t=setTimeout(()=>syncNow().catch(()=>{}),15000)}
+async function syncNow(force){if(!FBU||SYNC.busy||SYNC.ask&&!SYNC.mode)return;SYNC.busy=true;SYNC.err="";const mode=SYNC.mode||"",uni=SYNC.uni||{};SYNC.mode="";SYNC.uni=null;let ask=false;
+try{const u=FBU.uid,ref=FB.db.collection(FB_COL).doc(u),col=ref.collection("stu"),C=ldJ(SC_K,{}),first=localStorage.getItem("barri.sync.uid")!==u,same=C.u===u&&!first,
+ full=!same||!!mode||force==="full"||!C.c||Date.now()-(C.f||0)>864e5||typeof col.where!=="function",[md,qs]=await Promise.all([ref.get(),(full?col:col.where("ts",">",fsTs(C.c))).get()]);
+ const R={},noTs={};let mx=full?0:C.c,nr=1;qs.forEach(d=>{nr++;const x=d.data()||{},t=tsMs(x.ts);if(!t)noTs[d.id]=1;mx=Math.max(mx,t);try{R[d.id]=cleanStu(JSON.parse(x.d))}catch(e){}});
+ const RM=md.exists?JSON.parse(md.data().meta||"{}"):null,remoteEmpty=!RM&&!Object.keys(R).length;SYNC.reads=nr;
+ if(first&&!remoteEmpty&&!mode&&!isBlank()){SYNC.ask={u,em:FBU.email||"",rn:Object.entries(R).map(([id,o])=>[id,o.name])};ask=true;return}
+ const m0=first&&!remoteEmpty&&!mode?"down":mode||"merge",B=same?ldJ(SB_K,{h:{}}).h||{}:{},NB={},push={},kill=[],pull={},ren={};let L=stuOf(),del=Object.assign({},RM&&RM.del||{},st.del||{});
+ if(m0==="down"){applyRemote(R,RM||{});Object.keys(R).forEach(id=>NB[id]=shash(R[id]))}
+ else{if(m0==="up"){del=Object.assign({},st.del||{});Object.keys(R).forEach(id=>{if(!L[id])kill.push(id)})}
+  const un=new Set();Object.entries(uni).forEach(([a,b])=>{if(L[a]&&R[b]&&(a===b||!L[b])){L[b]=Object.assign({},L[a],{name:R[b].name,ft:Object.assign({},L[a].ft,{name:R[b].ft.name||0})});if(a!==b){delete L[a];ren[a]=b}un.add(b)}});
+  /* Al juntar, un mismo id con otro nombre es otro alumno (todos los dispositivos empiezan con «p1»): se le da un id nuevo. */
+  if(m0==="join")Object.keys(L).forEach((a,k)=>{if(R[a]&&!un.has(a)){const b="p"+(Date.now()+k+1).toString(36);L[b]=L[a];delete L[a];ren[a]=b}});
+  const ids=new Set([...Object.keys(L),...(m0==="up"?[]:Object.keys(R))]);
+  ids.forEach(id=>{const l=L[id]||null,r=m0==="up"?null:R[id]||null,dt=del[id]||0;
+   if(dt&&dt>=Math.max(l?l.mt:0,r?r.mt:0)){if(l||r)kill.push(id);if(l)pull[id]=null;return}
+   if(m0==="up"){push[id]=l;NB[id]=shash(l);return}
+   const m=l&&r?mergeStu(l,r):l||r,hm=shash(m);
+   if(r){if(hm!==shash(r)||noTs[id])push[id]=m;if(!l||shash(l)!==hm)pull[id]=m;NB[id]=hm}
+   else if(B[id]!==hm||!same){push[id]=l;NB[id]=hm}else NB[id]=B[id]});
+  Object.entries(ren).forEach(([a,b])=>{if(st.cur===a)st.cur=b;else{st.profs[b]=st.profs[a];delete st.profs[a]}});
+  Object.entries(pull).forEach(([id,o])=>{if(o===null){if(id===st.cur){const k=Object.keys(st.profs).find(x=>!pull.hasOwnProperty(x)||pull[x]);if(k)swStu(k);else Object.assign(st,blank())}delete st.profs[id];return}if(id===st.cur)Object.assign(st,blank(),o);else st.profs[id]=o});
+  if(RM&&m0!=="up"&&(RM.gmt||0)>(st.gmt||0))applyMeta(RM);st.del=del;
+  const meta=JSON.stringify(Object.assign(metaOf(),{del})),b=FB.db.batch();let n=0;
+  Object.entries(push).forEach(([id,o])=>{n++;b.set(col.doc(id),{d:JSON.stringify(o),mt:o.mt||0,ts:fsNow()})});kill.forEach(id=>{n++;b.delete(col.doc(id))});
+  if(!RM||canon(JSON.parse(meta))!==canon(Object.assign({},RM,{del:RM.del||{}}))||m0!=="merge"){n++;b.set(ref,{meta,ts:fsNow()})}
+  if(n)await b.commit();SYNC.writes=n}
+ ftBase();localStorage.setItem("barri.sync.uid",u);svJ(SB_K,{h:NB});svJ(SC_K,{u,c:mx||0,f:full?Date.now():C.f||0});
+ saveRaw();theme();SYNC.last=Date.now();localStorage.setItem("barri.sync.t",SYNC.last);SYNC.n={up:Object.keys(push).length,mode:m0}}catch(e){SYNC.err=fbErr(e)}finally{SYNC.busy=false;if(ask&&scr==="tutor")go("syncask");else if(scr==="tutor"||scr==="home"||scr==="syncask")show()}}
 function applyMeta(m){if(typeof m.pin==="string"&&/^\d{4}$/.test(m.pin))st.pin=m.pin;if(m.set&&typeof m.set==="object")st.set=Object.assign(st.set,{dur:+m.set.dur||st.set.dur,voice:typeof m.set.voice==="string"?m.set.voice:st.set.voice,snd:m.set.snd!==false});if(m.rol==="fam"||m.rol==="doc")st.rol=m.rol;if(m.theme==="dark"||m.theme==="light")st.theme=m.theme;st.gmt=m.gmt||0}
 function applyRemote(R,m){const ids=Object.keys(R).sort((x,y)=>(R[y].mt||0)-(R[x].mt||0));st.profs={};if(ids.length){const c=st.cur!=="md"&&R[st.cur]?st.cur:ids[0];ids.forEach(id=>{if(id!==c)st.profs[id]=R[id]});if(st.cur!=="md"){Object.assign(st,blank(),R[c]);st.cur=c}else st.profs[c]=R[c]}applyMeta(m);st.del=m.del||{}}
+/* Pantalla de la primera sincronización (sustituye al confirm()). Solo se llega tras el PIN. */
+SC.syncask=()=>{const a=SYNC.ask;if(!a){setTimeout(()=>go("tutor",{tab:"c"}));return""}const M=nameMatch(),mn=Object.keys(M).map(id=>roster().find(x=>x[0]===id)).filter(Boolean).map(x=>esc(x[1].name)),nl=roster().length,nr=a.rn.length;
+ return'<div class="tz">'+`<div class="tzh"><div class="av big">${ic("cloud",22)}</div><div class="tzn"><h2 class="hi">Datos en tu cuenta</h2><span class="mut">${esc(a.em)}</span></div><button class="rnd" data-go="tutor" aria-label="Volver a la zona del tutor">✕</button></div><div class="tzw tzb">`+
+ NOTE(`En la cuenta hay ${pl(nr,"alumno","alumnos")} de otro dispositivo y en este dispositivo ${pl(nl,"alumno","alumnos")}. La sincronización espera hasta que elijas.`)+
+ LH("Recomendado")+LST(ROW({i:"users",t:"Juntar los dos",s:"No se pierde nada: se suman los alumnos y su progreso",on:'data-act="sk" data-m="join"',k:"skp"})+(mn.length?`<label class="lr skl"><span class="li"><input type="checkbox" id="skuni" checked></span><span class="lt"><span class="ltt">Unir los que se llaman igual</span><small>${mn.join(", ")}</small></span></label>`:""))+
+ LH("Otras opciones")+LST(ROW({i:"download",t:"Usar solo los de la cuenta",s:"Lo jugado en este dispositivo se pierde",on:'data-act="sk" data-m="down"',d:1})+ROW({i:"up",t:"Usar solo los de este dispositivo",s:"Se borran de la cuenta los alumnos que no estén aquí",on:'data-act="sk" data-m="up"',d:1})+ROW({i:"download",t:"Guardar antes una copia",s:"De los alumnos de este dispositivo",on:'data-act="save"',nc:1}))+bkMsg()+"</div></div>"};
+/* Guardado: aviso si el navegador no deja guardar, y medidor del espacio compartido con las otras apps del sitio. */
+function svBan(){let b=document.getElementById("sverr");if(!SVERR){if(b)b.remove();return}if(b||!document.body)return;b=document.createElement("div");b.id="sverr";b.setAttribute("role","alert");b.innerHTML=`<div class="bk"><span class="ib2" aria-hidden="true">${ic("info",22)}</span><div><b>No se está guardando el progreso</b><small>El espacio de este dispositivo está lleno. Avisa a un adulto.</small></div><button class="sb" type="button">Ver</button></div>`;b.querySelector("button").onclick=()=>go("gate",{next:"sto"});document.body.prepend(b)}
+function goSto(){go("tutor",{tab:"c"});setTimeout(()=>{const e=document.getElementById("sto");if(e)e.scrollIntoView({block:"center"})},60)}
+function stoUse(){let me=0,ot=0;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i)||"",n=k.length+(localStorage.getItem(k)||"").length;if(k.startsWith("barri."))me+=n;else ot+=n}}catch(e){}return{me,ot}}
+const STOMAX=5e6,kb=n=>n<1e6?Math.max(1,Math.round(n/1e3))+" KB":(n/1e6).toLocaleString("es-ES",{maximumFractionDigits:1})+" MB";
+function stoSec(){const u=stoUse(),pc=n=>Math.min(100,n/STOMAX*100).toFixed(1),lib=Math.max(0,STOMAX-u.me-u.ot),hi=lib<STOMAX*.2;
+ return LH("Espacio en este dispositivo")+`<div class="ls" id="sto"><div class="lr lsto"><div class="stob" role="img" aria-label="Barri usa ${kb(u.me)} y las otras apps ${kb(u.ot)} de unos 5 MB"><i style="width:${pc(u.me)}%"></i><i class="o" style="width:${pc(u.ot)}%"></i></div><div class="stol"><span><i></i>Barri ${kb(u.me)}</span><span><i class="o"></i>Otras apps ${kb(u.ot)}</span><span>Libre: unos ${kb(lib)}</span></div></div></div>`+
+ (SVERR?NOTE('<span class="pinerr">No se pudo guardar el último cambio: el espacio está lleno.'+(FBU?" Lo sincronizado con la cuenta sí está a salvo.":"")+"</span>"):hi?NOTE('<span class="pinerr">Queda poco espacio.</span>'):"")+
+ NOTE("Lo comparten Barri y las demás apps de este sitio (Lectori, Calculi, Tabula…). Si se llena, Barri avisa. Para liberar espacio: guarda una copia y borra los alumnos que ya no uses.")}
 /* v1.17 · retos de pensar: elegir el problema que encaja (modelo u operación) e inventar uno */
 const KEYS={1:["sum","sub","sub","sub"],2:["more","less","diff","both"],4:["mul","div","times"]},OPK={sum:"+",sub:"−",more:"+",less:"−",diff:"−",both:"=",mul:"×",div:"÷",times:"="};
 function baseAB(p){const t=ptype(p),r=p.rows,v=s=>typeof s==="object"?s.v:s;if(p.w===1)return t===0?[r[0].s[0],r[0].s[1]]:[p.tot,r[0].s[0]];if(p.w===2)return t===0?[r[0].s[0],r[1].s[1]]:t===1?[r[0].s[0],v(r[1].s[1])]:t===2?[r[0].t,r[1].s[0]]:[r[0].s[0],r[1].s[1]];return t===0?[r[0].s[0],r[0].s.length]:t===1?[p.tot,r[0].s.length]:[r[0].s[0],r[1].s.length]}
@@ -331,7 +387,7 @@ else if(a==="thm"){const v=g("thm").value;st.theme=v==="dark"||v==="light"?v:nul
 else if(a==="voice"){st.set.voice=g("vo").value;gsave();if(d.ch)say("Hola, soy Bloquito.")}
 else if(a==="vtest")say("Hola, soy Bloquito. ¡Vamos a construir barras!");
 else if(a==="rename"){st.name=g("nm").value.trim();save();show()}
-else if(a==="reset"){const n=st.name,nt=st.notes;Object.assign(st,blank(n));st.notes=nt;save();BKMSG="Progreso reiniciado.";show()}
+else if(a==="reset"){const n=st.name,nt=st.notes,f=st.ft;Object.assign(st,blank(n));st.notes=nt;st.ft=f||{};st.rs=Date.now();save();BKMSG="Progreso reiniciado.";show()}
 else if(a==="pinfg"){cx.fg=true;cx.q=null;show()}
 else if(a==="setpin"){const v=g("pin").value.trim();if(!/^\d{4}$/.test(v)){BKMSG="El PIN debe tener exactamente 4 números.";return show()}st.pin=v;gsave();BKMSG="PIN guardado. Se pedirá para entrar en la zona del tutor y en el Modo Docente.";show()}
 else if(a==="delpin"){if(confirm("¿Quitar el PIN? La zona del tutor volverá a pedir una multiplicación.")){st.pin="";save();BKMSG="PIN eliminado.";show()}}
@@ -340,7 +396,7 @@ else if(a==="fic"){const[w,l]=nextLv();FIC.w=w;FIC.l=l;FIC.from=scr;FIC.seed=1+D
 else if(a==="ficnew"){FIC.seed++;show()}
 else if(a==="fbcfg"){const c=parseCfg(g("fbc").value||"");if(!c){SYNC.err="No encuentro apiKey, projectId y appId en lo pegado.";return show()}localStorage.setItem("barri.fb",JSON.stringify(c));SYNC.err="";show()}
 else if(a==="fbcfgx"){if(confirm("¿Quitar la configuración de Firebase de este dispositivo?")){localStorage.removeItem("barri.fb");FB=null;show()}}
-else if(a==="welg"||a==="weln"){localStorage.setItem("barri.wel","1");go("home");if(a==="welg")fbLogin()}else if(a==="fblogin"){fbLogin()}else if(a==="fblogout"){fbLogout()}else if(a==="fbsync"){syncNow();show()}
+else if(a==="welg"||a==="weln"){localStorage.setItem("barri.wel","1");go("home");if(a==="welg")fbLogin()}else if(a==="fblogin"){fbLogin()}else if(a==="fblogout"){fbLogout()}else if(a==="fbsync"){syncNow("full");show()}else if(a==="sk"&&SYNC.ask){SYNC.uni=d.m==="join"&&g("skuni")&&g("skuni").checked?nameMatch():{};SYNC.mode=d.m;SYNC.ask=null;syncNow();go("tutor",{tab:"c"})}
 else if(a==="ap"){st.ap={cp:g("apcp").value,nr:g("apnr").value,cb:g("apcb").value==="1",apo:g("apapo").value};save();theme();BKMSG="";show()}
 else if(a==="snd"){st.set.snd=g("snd").value==="1";gsave();if(st.set.snd&&window.chime)chime()}
 else if(a==="wipe"){st=DEF();DATA.problems=ORIG;save();theme();go("home")}
@@ -407,7 +463,7 @@ document.body.appendChild(s);A.classList.add("pre");let done=false;
 const end=()=>{if(done)return;done=true;s.classList.add("out");A.classList.remove("pre");A.classList.add("intro");setTimeout(()=>s.remove(),600);setTimeout(()=>A.classList.remove("intro"),1400)};
 s.addEventListener("pointerdown",end);setTimeout(end,red?900:3300)}
 
-theme();go(!localStorage.getItem("barri.wel")&&fbCfg()&&isBlank()&&(!/nosplash/.test(location.search)||/wel/.test(location.search))?"wel":"home");if(!isBlank())localStorage.setItem("barri.wel","1");splash();
+ftBase();svBan();theme();go(!localStorage.getItem("barri.wel")&&fbCfg()&&isBlank()&&(!/nosplash/.test(location.search)||/wel/.test(location.search))?"wel":"home");if(!isBlank())localStorage.setItem("barri.wel","1");splash();
 if(fbCfg()&&localStorage.getItem("barri.sync.uid")&&navigator.onLine!==false)fbInit().catch(()=>{});
 document.addEventListener("visibilitychange",()=>{if(document.hidden&&FBU){clearTimeout(SYNC.t);syncNow().catch(()=>{})}});
 if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});

@@ -162,9 +162,17 @@ Desde el 13/11/2026 el repositorio `ilinper301-hue/Barri` contiene **fuente y ap
 - Firebase opcional (Auth Google + Firestore), SDK compat 10.12.2 cargado de gstatic solo al usarlo. Config: FB_CFG (incrustada, ahora null) o pegada en Tutor › Perfil › Cuenta docente (localStorage "barri.fb").
 - Firestore: barri/{uid} {meta,ts} y barri/{uid}/stu/{id} {d,mt}. Reglas: match /{app}/{uid}/{document=**} con request.auth.uid==uid.
 - save() sube st.mt y programa syncSoon (15 s); gsave() sube st.gmt (ajustes globales). Borrados → st.del (lápidas).
-- 1ª sync por dispositivo ("barri.sync.uid"): remoto vacío→sube; local vacío→baja; si no, confirm(). Después, gana el más reciente por alumno.
+- 1ª sync por dispositivo ("barri.sync.uid"): remoto vacío→sube; local vacío→baja; si no, pantalla propia (ver 10k). Después, fusión por campos (10k).
 - v1.18.2: pantalla "wel" la 1ª vez (sin datos y sin flag barri.wel): Entrar con Google / Empezar sin cuenta. Los tests con ?nosplash no la ven (salvo ?nosplash&wel). Test wel.js.
 - Test: tests/sync.js con Firebase simulado (3 dispositivos). Firebase real no probado en sandbox.
+
+## 10k. v1.28 · Fase 1 de PLAN-BARRI: que no se pierda nada (Opus)
+- **Guardado:** saveRaw() ya no falla en silencio: SVERR + aviso #sverr (fuera de #app, role=alert; «Ver» → PIN → Ajustes › Espacio). Desaparece al volver a guardar bien.
+- **Espacio:** stoSec() en Ajustes (tras Copias): barra Barri (claves barri.*) / otras apps del dominio / libre sobre ~5 MB. Nunca aconsejar «borrar datos del sitio».
+- **Fusión por campos (mergeStu):** progreso = historial unido por (ts,id), resueltos por máximo, estrellas = repetición de las partidas que faltan (replay, simétrico con max para converger); días unidos. Campos FT (name, acc, notes, ap, place, dur) con fecha propia en st.ft, que pone stampFt() al guardar comparando con lo último guardado (ftBase() tras sincronizar). Reiniciar progreso pone st.rs: el reinicio más reciente manda y solo se suman partidas posteriores.
+- **Incremental:** cada doc lleva ts = serverTimestamp(); se consulta where("ts",">",cursor). barri.sync.c = {u,c (cursor ms),f (última lectura completa)}; lectura completa al cambiar de cuenta, al decidir, con «Sincronizar ahora» y cada 24 h. barri.sync.base = {h:{id:huella}} de lo que ya está en la nube: solo se sube lo que cambió. Docs sin ts (versiones viejas) se reescriben una vez. Meta solo se escribe si cambia.
+- **Primera sincronización con datos en los dos lados:** SYNC.ask (sin tocar nada) → pantalla SC.syncask, solo tras el PIN (gateOk o desde la Zona del tutor). Juntar por defecto (+ «Unir los que se llaman igual», nameMatch); un mismo id con otro nombre recibe id nuevo (todos empiezan en p1). «Solo la cuenta» y «solo este dispositivo» piden doble toque.
+- Test: tests/sync2.js (Firebase simulado con hora de servidor y consultas; cuenta lecturas).
 
 ## 10k. v1.19 Zona del tutor en listas (estilo Lectori 3.23, Opus)
 - Componentes en app.js: LH (cabecera mayúsculas), LST (lista; en Barri LS ya es el estado de la lección), ROW({i,av,t,s,v,c,on,d,nc,k}) (en Barri RW ya existe en game.js), NOTE, SEL(id,ch,opciones,actual) = desplegable con guardado al cambiar (data-ch → doAct). `on` son atributos data-* (data-act, data-go, data-sub, data-tab, data-rev).

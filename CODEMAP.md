@@ -6,49 +6,130 @@ Usa `sed -n 'INICIO,FINp' archivo` o `grep -n` para leer solo lo necesario. Lín
 ## src/js/game.js
 
 - L3: `P`
-- L4: `col`
-- L5: `sv`
-- L6: `S`
-- L7: `reset`
-- L9: `bot`
-- L10: `star`
-- L11: `slotList`
-- L12: `slot`
-- L14: `fmodel`
-- L15: `cells`
-- L16: `reg`
-- L17: `h`
-- L20: `dmodel`
-- L23: `tbw`
-- L25: `model`
-- L26: `wd`
-- L27: `tv`
-- L31: `chips`
-- L32: `two`
-- L33: `wrap2`
-- L35: `render`
-- L37: `pr`
-- L38: `tx`
-- L39: `h`
-- L49: `bn`
-- L50: `lab`
-- L51: `place`
-- L52: `say`
-- L53: `chkF`
-- L56: `chkD`
-- L66: `chkM`
-- L71: `chkO`
-- L74: `chkA`
-- L82: `dr`
-- L83: `slotTap`
-- L84: `dropAt`
-- L88: `rz`
-- L89: `c`
-- L98: `endPtr`
-- L99: `x`
-- L106: `prefill`
-- L109: `startGame`
-- L111: `recover`
+- L4: `cbOn`
+- L5: `col`
+- L6: `pat`
+- L7: `sv`
+- L8: `S`
+- L9: `reset`
+- L11: `bot`
+- L12: `star`
+- L13: `slotList`
+- L14: `slot`
+- L16: `fmodel`
+- L17: `cells`
+- L18: `reg`
+- L19: `h`
+- L22: `dmodel`
+- L25: `tbw`
+- L27: `XT`
+- L28: `xsync`
+- L30: `model`
+- L31: `cap`
+- L32: `RW`
+- L36: `wd2`
+- L37: `tv`
+- L41: `chips`
+- L42: `two`
+- L43: `wrap2`
+- L45: `PDC`
+- L46: `pad`
+- L49: `seg`
+- L50: `all`
+- L51: `fit`
+- L52: `cur`
+- L55: `end`
+- L61: `NL`
+- L62: `trayD`
+- L63: `chime`
+- L65: `hist`
+- L66: `mtools`
+- L67: `exLines`
+- L69: `opsChips`
+- L70: `remind`
+- L73: `spCard`
+- L75: `row`
+- L78: `spRender`
+- L82: `spWin`
+- L83: `spPick`
+- L84: `spChk`
+- L85: `render`
+- L88: `tx`
+- L89: `h`
+- L102: `ow`
+- L104: `nrPost`
+- L105: `k`
+- L106: `grow`
+- L108: `AP`
+- L109: `cpOn`
+- L110: `nrOn`
+- L111: `cpMax`
+- L112: `EMO`
+- L113: `emo`
+- L114: `objs`
+- L115: `grp`
+- L116: `cpCard`
+- L120: `cpCount`
+- L121: `txHTML`
+- L123: `sayHL`
+- L124: `got`
+- L125: `goLbl`
+- L127: `hsh`
+- L128: `mis`
+- L129: `misStr`
+- L130: `kindOf`
+- L131: `KD`
+- L132: `KS`
+- L133: `mkOpts`
+- L134: `mkCard`
+- L135: `unitOf`
+- L136: `kp`
+- L137: `STOPW`
+- L138: `unitW`
+- L139: `estQ`
+- L140: `frQ`
+- L141: `others`
+- L142: `o`
+- L143: `ckCard`
+- L145: `finish`
+- L146: `pick`
+- L149: `goMsg`
+- L150: `chkU`
+- L151: `enter3`
+- L152: `bn`
+- L153: `lab`
+- L155: `apoOn`
+- L156: `apoCheck`
+- L158: `apoMark`
+- L159: `apo1`
+- L162: `apo2`
+- L163: `h`
+- L164: `apo3`
+- L166: `back`
+- L167: `place`
+- L168: `say`
+- L169: `chkF`
+- L172: `chkD`
+- L182: `chkM`
+- L187: `chkOL`
+- L189: `x`
+- L192: `chkO`
+- L195: `chkA`
+- L207: `sb`
+- L209: `gp`
+- L210: `so`
+- L211: `sk`
+- L212: `mk`
+- L216: `dr`
+- L217: `slotTap`
+- L218: `dropAt`
+- L222: `rz`
+- L223: `c`
+- L232: `endPtr`
+- L233: `x`
+- L240: `prefill`
+- L243: `startGame`
+- L245: `recover`
 
 ## src/js/app.js
 
@@ -56,130 +137,219 @@ Usa `sed -n 'INICIO,FINp' archivo` o `grep -n` para leer solo lo necesario. Lín
 - L3: `ORIG`
 - L5: `KEY`
 - L7: `theme`
-- L8: `save`
-- L10: `STU`
-- L12: `FAM`
-- L13: `roster`
-- L14: `asStu`
-- L15: `enterMd`
-- L16: `swStu`
-- L17: `addStu`
-- L18: `delStu`
-- L19: `XMSG`
-- L21: `WN`
-- L22: `EX`
-- L23: `pool`
-- L24: `open`
-- L25: `pl`
-- L26: `day`
-- L27: `streak`
-- L28: `nextLv`
-- L29: `logo`
-- L30: `ACC`
-- L31: `mas`
-- L34: `IC`
-- L35: `wc`
-- L36: `BD`
-- L37: `TC`
-- L38: `tiers`
-- L39: `bdg`
-- L41: `IO`
-- L42: `ic`
-- L43: `bar`
-- L44: `ih`
-- L45: `lc`
-- L46: `dots`
-- L47: `sc`
-- L48: `bubs`
-- L49: `minsToday`
-- L50: `wk`
-- L51: `review`
-- L52: `dl`
-- L53: `esc`
-- L54: `whoSel`
-- L55: `lvTxt`
-- L56: `ago`
-- L57: `pc`
-- L58: `comp`
-- L59: `hardW`
-- L60: `compSec`
-- L61: `noteSec`
-- L62: `TIP`
-- L63: `famTxt`
-- L68: `famSec`
-- L69: `privSec`
-- L70: `aula`
-- L71: `gr`
-- L75: `BKMSG`
-- L76: `bkSet`
-- L77: `bkDue`
-- L78: `bkBanner`
-- L79: `cleanLog`
-- L80: `cleanStu`
-- L81: `cleanAll`
-- L84: `shareBk`
-- L86: `dlb`
-- L88: `famFilter`
-- L89: `rolSec`
-- L90: `bkState`
-- L91: `NM`
-- L92: `scr`
-- L93: `TB`
-- L94: `p` (pantalla/pestaña dentro de SC o TB)
-- L106: `a` (pantalla/pestaña dentro de SC o TB)
-- L107: `c` (pantalla/pestaña dentro de SC o TB)
-- L110: `s` (pantalla/pestaña dentro de SC o TB)
-- L112: `LT`
-- L113: `initLesson`
-- L118: `all`
-- L121: `SC`
-- L122: `home` (pantalla/pestaña dentro de SC o TB)
-- L123: `learn` (pantalla/pestaña dentro de SC o TB)
-- L124: `les` (pantalla/pestaña dentro de SC o TB)
-- L126: `adv` (pantalla/pestaña dentro de SC o TB)
-- L127: `album` (pantalla/pestaña dentro de SC o TB)
-- L128: `nb` (pantalla/pestaña dentro de SC o TB)
-- L129: `gate` (pantalla/pestaña dentro de SC o TB)
-- L130: `tutor` (pantalla/pestaña dentro de SC o TB)
-- L131: `show`
-- L132: `go`
-- L133: `startList`
-- L134: `play`
-- L135: `Game`
-- L136: `exit` (pantalla/pestaña dentro de SC o TB)
-- L137: `upd`
-- L176: `b64blob`
-- L177: `xdl`
-- L178: `unzip`
-- L180: `ds`
-- L182: `readXlsx`
-- L183: `ss`
-- L184: `path`
-- L187: `rows`
-- L188: `mkProb`
-- L189: `mm`
-- L191: `nm`
-- L198: `nums`
-- L200: `dd`
-- L202: `importX`
-- L205: `s`
-- L208: `splash`
-- L209: `k`
-- L212: `end`
-- L215: `mAbs`
-- L216: `readMan`
-- L217: `diag`
-- L226: `runDiag`
+- L9: `tcol`
+- L11: `SVERR`
+- L13: `FT`
+- L15: `FAM`
+- L16: `roster`
+- L17: `asStu`
+- L18: `enterMd`
+- L19: `swStu`
+- L20: `addStu`
+- L21: `delStu`
+- L22: `XMSG`
+- L24: `WN`
+- L25: `EX`
+- L26: `pool`
+- L27: `PL`
+- L28: `pl`
+- L29: `day`
+- L30: `streak`
+- L31: `nextLv`
+- L32: `logo`
+- L33: `ACC`
+- L34: `mas`
+- L37: `IC`
+- L38: `wc`
+- L39: `BD`
+- L40: `TC`
+- L41: `tiers`
+- L42: `bdg`
+- L44: `IO`
+- L45: `ic`
+- L46: `bar`
+- L47: `ih`
+- L48: `lc`
+- L49: `dots`
+- L50: `sc`
+- L51: `bubs`
+- L52: `minsToday`
+- L53: `wk`
+- L54: `review`
+- L55: `dl`
+- L56: `esc`
+- L57: `lvTxt`
+- L58: `ago`
+- L59: `pc`
+- L60: `comp`
+- L61: `ONM`
+- L62: `misT`
+- L63: `misRep`
+- L64: `hardW`
+- L65: `TIP`
+- L66: `famTxt`
+- L71: `BKMSG`
+- L72: `bkSet`
+- L73: `bkDue`
+- L74: `bkBanner`
+- L75: `cleanLog`
+- L76: `cleanAp`
+- L77: `cleanPl`
+- L78: `cleanStu`
+- L79: `cleanAll`
+- L82: `shareBk`
+- L84: `dlb`
+- L86: `bkState`
+- L87: `gateOk`
+- L88: `psel`
+- L89: `WI`
+- L90: `NM`
+- L91: `scr`
+- L94: `LH`
+- L97: `LADDER`
+- L98: `SUBH`
+- L99: `tzSub`
+- L108: `tzP`
+- L125: `accRows`
+- L129: `durOf`
+- L130: `PLN`
+- L131: `tzU`
+- L145: `tzC`
+- L154: `tzA`
+- L160: `TB`
+- L162: `FIC`
+- L163: `ficRnd`
+- L164: `ficPick`
+- L165: `ficBars`
+- L172: `ficProb`
+- L175: `ficSol`
+- L177: `ficScreen`
+- L189: `LT`
+- L190: `initLesson`
+- L195: `all`
+- L198: `PJS`
+- L199: `pjDay`
+- L200: `pjState`
+- L201: `SC`
+- L202: `head`
+- L208: `home` (pantalla/pestaña dentro de SC o TB)
+- L210: `learn` (pantalla/pestaña dentro de SC o TB)
+- L211: `les` (pantalla/pestaña dentro de SC o TB)
+- L213: `adv` (pantalla/pestaña dentro de SC o TB)
+- L214: `lockT`
+- L219: `album` (pantalla/pestaña dentro de SC o TB)
+- L220: `nb` (pantalla/pestaña dentro de SC o TB)
+- L221: `wel` (pantalla/pestaña dentro de SC o TB)
+- L222: `gate` (pantalla/pestaña dentro de SC o TB)
+- L224: `v`
+- L226: `tutor` (pantalla/pestaña dentro de SC o TB)
+- L229: `show`
+- L230: `UNL`
+- L231: `go`
+- L232: `pjDo`
+- L234: `startList`
+- L235: `mixList`
+- L238: `ptype`
+- L239: `dif`
+- L240: `skill`
+- L241: `ADP`
+- L244: `GLG`
+- L245: `FBV`
+- L246: `fbCfg`
+- L247: `FB`
+- L248: `parseCfg`
+- L249: `fbLoad`
+- L250: `fbInit`
+- L251: `fbLogin`
+- L252: `fbLogout`
+- L253: `fbErr`
+- L254: `stuOf`
+- L255: `metaOf`
+- L256: `isBlank`
+- L260: `canon`
+- L261: `shash`
+- L262: `lkey`
+- L263: `replay`
+- L264: `xtra`
+- L265: `mergeStu`
+- L272: `FTH`
+- L273: `stampFt`
+- L274: `ftBase`
+- L278: `SB_K`
+- L279: `tsMs`
+- L280: `nnm`
+- L281: `nameMatch`
+- L282: `syncSoon`
+- L283: `syncNow`
+- L311: `applyMeta`
+- L312: `applyRemote`
+- L320: `svBan`
+- L321: `goSto`
+- L322: `stoUse`
+- L323: `STOMAX`
+- L324: `stoSec`
+- L329: `KEYS`
+- L330: `baseAB`
+- L331: `story`
+- L332: `NMS`
+- L333: `shuf`
+- L334: `spItem`
+- L339: `cand`
+- L340: `ds`
+- L342: `POS`
+- L343: `spFor`
+- L345: `EVSEQ`
+- L346: `evPick`
+- L347: `startEval`
+- L348: `evalNext`
+- L349: `failed`
+- L350: `evalApply`
+- L351: `play`
+- L352: `st0`
+- L353: `adapt`
+- L356: `adaptEnd`
+- L357: `endExtra`
+- L359: `adpGo`
+- L360: `Game`
+- L361: `exit` (pantalla/pestaña dentro de SC o TB)
+- L362: `upd`
+- L377: `v`
+- L381: `doAct`
+- L424: `b64blob`
+- L425: `xdl`
+- L426: `unzip`
+- L428: `ds`
+- L430: `readXlsx`
+- L431: `ss`
+- L432: `path`
+- L435: `rows`
+- L436: `mkProb`
+- L437: `mm`
+- L439: `nm`
+- L448: `nums`
+- L450: `xd`
+- L451: `dd`
+- L453: `importX`
+- L456: `s`
+- L459: `splash`
+- L460: `k`
+- L463: `end`
 
 ## src/css/styles.css (secciones)
 
-- L108: /* ===== Tema oscuro (directrices) ===== */
-- L118: /* ===== Zona del tutor: estética de la otra app ===== */
-- L148: /* ===== Inicio v2 (pantalla de inicio) ===== */
-- L173: /* ===== Animación de bienvenida ===== */
-- L191: /* ===== Perfiles, aula y competencias ===== */
-- L201: /* ===== Tablet y pantallas horizontales ===== */
-- L222: /* ===== Diseño unificado Lectori · Barri (acento morado, tarjetas planas) ===== */
+- L114: /* ===== Tema oscuro (directrices) ===== */
+- L124: /* ===== Zona del tutor: estética de la otra app ===== */
+- L144: /* ===== Inicio v2 (pantalla de inicio) ===== */
+- L167: /* ===== Animación de bienvenida ===== */
+- L185: /* ===== Perfiles, aula y competencias ===== */
+- L191: /* ===== Tablet y pantallas horizontales ===== */
+- L212: /* ===== Diseño unificado Lectori · Barri (acento morado, tarjetas planas) ===== */
+- L220: /* ===== Pantalla de perfiles (como Lectori) ===== */
+- L227: /* ===== v1.13: PIN, avanzado, selector de problemas, tarjeta docente ===== */
+- L234: /* ===== v1.13: deshacer/reiniciar, operaciones en líneas, recordatorio ===== */
+- L241: /* ===== v1.13 · Zonas de soltar grandes y reparto vertical ===== */
+- L303: /* ===== v1.13 · Jerarquía de acciones, fichas con agarre, burbuja del personaje ===== */
+- L780: /* ===== v1.28 · Fase 1: guardado, espacio y primera sincronización ===== */
 
 ## Bloques grandes que NO hay que abrir
 - `data/banco_problemas.xlsx` (banco; se edita con Excel). `src/js/data.generated.js` (referencia; lo regenera build.py). `{{XLSX_B64}}` en app.js se inyecta al compilar.

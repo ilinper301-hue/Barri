@@ -17,7 +17,7 @@ Cada fase es un chat independiente. Al terminar una fase: márcala aquí como he
 **Riesgos, de mayor a menor:**
 
 1. ~~**El código fuente no está en GitHub.**~~ Resuelto en la fase 0.
-2. **Primera sincronización con `confirm()`.** «Aceptar» sustituye los datos del dispositivo y «Cancelar» sustituye **y borra** los de la cuenta (los alumnos que no estén en ese dispositivo se eliminan de la nube). Un toque equivocado en una tableta con algo de juego local puede borrar la clase.
+2. ~~**Primera sincronización con `confirm()`.**~~ Resuelto en la fase 1. «Aceptar» sustituye los datos del dispositivo y «Cancelar» sustituye **y borra** los de la cuenta (los alumnos que no estén en ese dispositivo se eliminan de la nube). Un toque equivocado en una tableta con algo de juego local puede borrar la clase.
 3. **Fusión «gana el último, entero».** Si un alumno juega en una tableta y a la vez se editan sus notas o apoyos en otro dispositivo, se pierde uno de los dos cambios.
 4. **Guardado que falla en silencio.** `saveRaw()` ignora el error. Medido: 30 alumnos con historial lleno ocupan unos 2 millones de caracteres, de un límite de unos 5 millones **compartido con Lectori, Tabula, Charta, Calculi y Fori** (mismo dominio). Si se llena, el progreso deja de guardarse sin avisar.
 5. **Cada sincronización lee todos los alumnos.** Tras cada problema resuelto (espera de 15 s) se descargan todos los documentos de la clase. Con 25 tabletas en la misma cuenta son miles de lecturas por sesión, de una cuota gratuita compartida con las otras apps.
@@ -41,8 +41,9 @@ Cada fase es un chat independiente. Al terminar una fase: márcala aquí como he
 ### Fase 0 · El código, a salvo — ✅ **hecha el 2026-11-13**
 El repositorio contiene ya `src/`, `tools/`, `tests/`, `data/` y la documentación. Comprobado: compilar desde el repositorio da byte a byte el `index.html` publicado, y pasan los 25 grupos de pruebas. Nuevo: `tools/publish.py` (copia `dist/` a la raíz), `CLAUDE.md` (reglas de trabajo), `.nojekyll` y `.gitignore`. La app publicada no cambia (sigue en 1.27.0). Decisión D1: código en el mismo repositorio público.
 
-### Fase 1 · Que no se pierda nada — *Opus, esfuerzo alto (datos y nube)*
+### Fase 1 · Que no se pierda nada — ✅ **hecha el 2026-11-18 (v1.28.0)**
 Aviso visible si falla el guardado y medidor de espacio en Ajustes. Sustituir el `confirm()` por una pantalla propia, tras el PIN, con «Juntar» por defecto. Fusión por campos (historial por fecha, resueltos por máximo, notas y apoyos por su propia fecha). Sincronizar leyendo solo lo cambiado desde la última vez. Pruebas de cada caso.
+Hecho: aviso #sverr y medidor en Ajustes; pantalla «Datos en tu cuenta» tras el PIN (Juntar, unir por nombre, ids «p1» que chocan); fusión por campos con reinicio; lectura incremental por hora del servidor (en reposo, 1 lectura en vez de todos los alumnos); `tests/sync2.js`. Detalle en CONTEXT.md §10k. Riesgos 2-5 del diagnóstico resueltos.
 
 ### Fase 2 · Dedos y lectores de pantalla — *Sonnet, esfuerzo medio*
 Todos los controles a 44 px o más (lista en B.1), `aria-live` en el mensaje de Bloquito, foco visible. Prueba automática que mida los tamaños en cada pantalla.

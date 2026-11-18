@@ -1,6 +1,6 @@
 // v1.18: cuenta docente con Firebase simulado (dos dispositivos que comparten un servidor falso)
 const { chromium } = require("playwright");
-let bad=0;const ok=(c,m)=>{if(!c){bad++;console.log("FALLO",m)}};
+let bad=0,DLG=0;const ok=(c,m)=>{if(!c){bad++;console.log("FALLO",m)}};
 const SRV=new Map();
 const srv=(op,a,b)=>{if(op==="get")return SRV.get(a)||null;if(op==="list")return [...SRV.entries()].filter(([k])=>k.startsWith(a+"/")&&!k.slice(a.length+1).includes("/")).map(([k,v])=>[k.slice(a.length+1),v]);if(op==="batch"){a.forEach(o=>o.t==="set"?SRV.set(o.p,o.d):SRV.delete(o.p));return true}};
 const MOCK=()=>{const AUTH={currentUser:null,cbs:[],onAuthStateChanged(f){this.cbs.push(f);setTimeout(()=>f(this.currentUser),0)},async signInWithPopup(){this.currentUser={uid:"u1",email:"maestro@cole.es",displayName:"Maestro"};this.cbs.forEach(f=>f(this.currentUser))},async signOut(){this.currentUser=null;this.cbs.forEach(f=>f(null))},async getRedirectResult(){}};
@@ -9,7 +9,7 @@ const MOCK=()=>{const AUTH={currentUser:null,cbs:[],onAuthStateChanged(f){this.c
  window.firebase={apps:[],initializeApp(c){this.apps.push(c)},auth:Object.assign(()=>AUTH,{GoogleAuthProvider:function(){}}),firestore:()=>DB}};
 const CFG=`const firebaseConfig = {\n  apiKey: "AIzaFake",\n  authDomain: "barri-test.firebaseapp.com",\n  projectId: "barri-test",\n  appId: "1:123:web:abc"\n};`;
 (async()=>{const b=await chromium.launch();
-const dev=async()=>{const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();p.on("pageerror",e=>{bad++;console.log("ERROR JS",e.message)});p.on("dialog",d=>d.accept());await p.exposeFunction("__srv",srv);await p.addInitScript(MOCK);await p.goto(process.env.APP_URL+"?nosplash");await p.waitForTimeout(300);return p};
+const dev=async()=>{const ctx=await b.newContext({viewport:{width:390,height:844}});const p=await ctx.newPage();p.on("pageerror",e=>{bad++;console.log("ERROR JS",e.message)});p.on("dialog",d=>{DLG++;d.accept()});await p.exposeFunction("__srv",srv);await p.addInitScript(MOCK);await p.goto(process.env.APP_URL+"?nosplash");await p.waitForTimeout(300);return p};
 const A=await dev();
 await A.evaluate(()=>{st.name="Ana";st.stars=7;st.solved={"M1-N1-01":3};save();addStu("Luis");st.pin="2468";gsave();UNL=Date.now();go("tutor",{tab:"s"})});
 ok(await A.locator("#fbc").count()===0&&await A.locator('[data-act="fblogin"]').count()===1&&await A.locator('[data-act="fbcfgx"]').count()===0,"configuración incluida: solo Entrar con Google");
@@ -33,9 +33,12 @@ await A.evaluate(async()=>{const id=roster().find(x=>x[1].name==="Luis")[0];delS
 ok(await B.evaluate(()=>!roster().some(x=>x[1].name==="Luis")),"alumno borrado desaparece en el otro dispositivo");
 // alumno nuevo en B llega a A
 await B.evaluate(async()=>{addStu("Sara");await syncNow()});await A.evaluate(async()=>{await syncNow()});ok(await A.evaluate(()=>roster().some(x=>x[1].name==="Sara")),"alumno nuevo llega al otro dispositivo");
-// dispositivo C con datos propios: pregunta y usa la cuenta (diálogo aceptado)
-const C=await dev();await C.evaluate(c=>{st.name="Pepe";st.stars=2;save();localStorage.setItem("barri.fb",JSON.stringify(parseCfg(c)))},CFG);await C.evaluate(()=>fbLogin());await C.waitForFunction(()=>SYNC.last>0&&!SYNC.busy,null,{timeout:5000});
-ok(await C.evaluate(()=>!roster().some(x=>x[1].name==="Pepe")&&roster().some(x=>x[1].name==="Ana")),"con datos propios pregunta y usa los de la cuenta");
+// dispositivo C con datos propios: ya no hay confirm(); la sincronización espera y el tutor elige tras el PIN
+const C=await dev();await C.evaluate(c=>{st.name="Pepe";st.stars=2;save();localStorage.setItem("barri.fb",JSON.stringify(parseCfg(c)))},CFG);await C.evaluate(()=>fbLogin());await C.waitForFunction(()=>!!SYNC.ask&&!SYNC.busy,null,{timeout:5000});
+ok(DLG===0,"sin diálogos del navegador");ok(await C.evaluate(()=>roster().some(x=>x[1].name==="Pepe")&&SYNC.last===0),"espera la decisión sin tocar nada");
+await C.evaluate(()=>{UNL=Date.now();go("gate")});ok(await C.evaluate(()=>scr==="syncask"),"tras el PIN aparece la pantalla de decisión");
+await C.click('[data-act="sk"][data-m="down"]');await C.click('[data-act="sk"][data-m="down"]');await C.waitForFunction(()=>SYNC.last>0&&!SYNC.busy,null,{timeout:5000});
+ok(await C.evaluate(()=>!roster().some(x=>x[1].name==="Pepe")&&roster().some(x=>x[1].name==="Ana")),"«Usar solo los de la cuenta» (doble toque)");
 // cerrar sesión
 await C.evaluate(()=>{UNL=Date.now();go("tutor",{tab:"s"})});await C.click('[data-act="fblogout"]');ok(await C.evaluate(()=>!FBU&&!!document.querySelector('[data-act="fblogin"]')),"cerrar sesión");
 console.log(bad?"sync.js: "+bad+" fallos":"sync.js: todo OK");await b.close()})();
