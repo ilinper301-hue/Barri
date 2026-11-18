@@ -48,7 +48,7 @@ Hecho: aviso #sverr y medidor en Ajustes; pantalla «Datos en tu cuenta» tras e
 ### Fase 2 · Dedos y lectores de pantalla — ✅ **hecha el 2026-11-18 (v1.29.0)**
 Todos los controles a 44 px o más (lista en B.1), `aria-live` en el mensaje de Bloquito, foco visible. Prueba automática que mida los tamaños en cada pantalla.
 
-### Fase 3 · Un solo sistema de diseño — *Sonnet, esfuerzo alto*
+### Fase 3 · Un solo sistema de diseño — ✅ **hecha el 2026-11-18 (v1.30.0)**
 Variables para color, tamaño de letra, radio y espacio; aplanar las capas por versión y quitar `!important`. Un color por significado: naranja = acción principal, verde = solo acierto, morado = marca; paleta de barras separada. Decidir si Nunito se queda. Capturas antes y después en las cuatro combinaciones (móvil/tableta, claro/oscuro).
 
 ### Fase 4 · Pantalla de juego — *Opus, esfuerzo alto* · depende de 3

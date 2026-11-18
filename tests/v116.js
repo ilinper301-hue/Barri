@@ -32,7 +32,7 @@ ok(await page.evaluate(()=>open(6,3)&&pool(6,3).length===5),"mundo Extremo con 5
 await page.evaluate(()=>{S.on=false;go("adv",{w:6})});ok(await page.locator('.wcd[data-w="6"]').count()===1,"Extremo en el mapa");
 ok(await page.evaluate(()=>!mixList(50).some(p=>p.w===6)),"Extremo fuera de Mezcla");
 // números del selector con el color del mundo
-await page.evaluate(()=>{go("adv",{w:1,tutor:1});document.querySelector(".psel").open=true});ok(await page.evaluate(()=>getComputedStyle(document.querySelector(".lvw .pp b")).backgroundColor!==getComputedStyle(document.querySelector(".ib")||document.body).backgroundColor&&getComputedStyle(document.querySelector(".lvw")).getPropertyValue("--wc").trim()==="#15803D"),"selector con color del mundo");
+await page.evaluate(()=>{go("adv",{w:1,tutor:1});document.querySelector(".psel").open=true});ok(await page.evaluate(()=>getComputedStyle(document.querySelector(".lvw .pp b")).backgroundColor!==getComputedStyle(document.querySelector(".ib")||document.body).backgroundColor&&getComputedStyle(document.querySelector(".lvw")).getPropertyValue("--wc").trim()==="#0E7490"),"selector con color del mundo");
 // tutor: dos bloques y desplegables
 await page.evaluate(()=>go("tutor",{tab:"p"}));ok(await page.locator(".pg-2").count()===1&&await page.locator(".pg-2 .lh").count()>=2&&await page.locator(".pst>div").count()===4,"tutor reorganizado en listas");
 // banco variado

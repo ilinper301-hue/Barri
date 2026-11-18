@@ -2,7 +2,7 @@
 
 let P=[];
 const cbOn=()=>typeof document!=="undefined"&&document.documentElement&&document.documentElement.dataset&&document.documentElement.dataset.cb==="1";
-const col=v=>{const cb=cbOn();return v==="?"?(cb?["#F0E442","#1F2A44"]:["#FDE68A","#1F2A44"]):/^\d+$/.test(String(v))?(cb?[["#0072B2","#fff"],["#009E73","#fff"],["#E69F00","#1F2A44"],["#CC79A7","#1F2A44"]]:[["#2563EB","#fff"],["#15803D","#fff"],["#F59E0B","#1F2A44"],["#7C3AED","#fff"]])[v%4]:["#E3DDF5","#1F2A44"]};
+const col=v=>{const cb=cbOn();return v==="?"?(cb?["#F0E442","#1F2A44"]:["#FDE68A","#1F2A44"]):/^\d+$/.test(String(v))?(cb?[["#0072B2","#fff"],["#009E73","#fff"],["#E69F00","#1F2A44"],["#CC79A7","#1F2A44"]]:[["#2563EB","#fff"],["#0F766E","#fff"],["#F59E0B","#1F2A44"],["#7C3AED","#fff"]])[v%4]:["#E3DDF5","#1F2A44"]};
 const pat=v=>v==="?"?"q":/^\d+$/.test(String(v))?String(v%4):"";
 const sv=s=>typeof s==="object"?s.v:s;
 const S={i:0,stars:0,fin:false,on:false};

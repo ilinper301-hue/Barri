@@ -251,3 +251,9 @@ El usuario no puede evitar escribir "Continúa" cuando te cortan. Hazlo barato:
 - Bloque final de styles.css «v1.29»: min 44 px en volver, ✕, altavoz, pasos hechos (zona táctil con borde transparente), pestañas del tutor, Guardar copia, Deshacer/Reiniciar, herramientas de la pizarra, +/− y huecos en modo lección.
 - `role="status" aria-live="polite"` en el mensaje de Bloquito (game.js); `:focus-visible` naranja global.
 - `tests/tap44.js` mide todos los controles en 390 y 1180 px (inicio, aprender, mapa, álbum, perfiles, tutor, 7 pasos de juego).
+
+## 10t. v1.30 · Fase 3 de PLAN-BARRI: un solo sistema de diseño (Sonnet)
+- Un color por significado: **naranja = acción principal** (`--act`, texto `--onact`, sombra `--actd`; botones `.bt`, `.acts`, `.dock`), **verde = solo acierto** (`--ok`, `--okd`), **morado = marca/progreso** (`--ac`; barra de progreso, paso actual y pasos hechos en morado suave). Mundo 1 pasa a cian (#0E7490) y la barra verde a teal (#0F766E); las barras (`col()` en game.js) son una paleta aparte.
+- Escalas en `:root`: radios `--r1..r4`, `--rp` (8/12/16/22/pill) y letra `--f1..f8` (12-24 px). Los rem y valores sueltos se dejan como estaban.
+- `!important`: de 45 a 7 líneas (solo @media print, movimiento reducido y `.card.tx` con el hueco del altavoz). Hay que añadir color/tamaño con las variables, no con valores nuevos.
+- Nunito se mantiene (fuente del cuerpo, 27 KB). `tools/shots.js <carpeta>` hace capturas en móvil/tableta × claro/oscuro para comparar antes/después.
